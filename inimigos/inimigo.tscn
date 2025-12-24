@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cmr2h733llaik"]
 
-[ext_resource type="Script" uid="uid://sn8t83pli5c" path="res://inimigo.gd" id="1_030df"]
+[ext_resource type="Script" uid="uid://sn8t83pli5c" path="res://inimigos/inimigo.gd" id="1_030df"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1su0k"]
 size = Vector2(40, 40)

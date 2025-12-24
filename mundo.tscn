@@ -1,13 +1,14 @@
-[gd_scene load_steps=14 format=3 uid="uid://c28vro5ybqqvt"]
+[gd_scene load_steps=15 format=3 uid="uid://c28vro5ybqqvt"]
 
-[ext_resource type="Script" uid="uid://bxyvot7u231ja" path="res://inferno.gd" id="1_6ba58"]
+[ext_resource type="Script" uid="uid://bxyvot7u231ja" path="res://characters/Inferno/inferno.gd" id="1_6ba58"]
 [ext_resource type="Texture2D" uid="uid://4u66n3owft75" path="res://icon.svg" id="1_lgngo"]
 [ext_resource type="Script" uid="uid://blmw8asaqnfvs" path="res://mundo.gd" id="1_otwa2"]
-[ext_resource type="Script" uid="uid://bvyptehp3cyy1" path="res://skye.gd" id="3_fw4w5"]
-[ext_resource type="Script" uid="uid://dd1f00oh8pvhe" path="res://luka.gd" id="4_5ckkb"]
-[ext_resource type="PackedScene" uid="uid://biudctngggtjp" path="res://shadow.tscn" id="5_aou4a"]
-[ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://inimigo.tscn" id="7_2hh7m"]
+[ext_resource type="Script" uid="uid://bvyptehp3cyy1" path="res://characters/skye/skye.gd" id="3_fw4w5"]
+[ext_resource type="Script" uid="uid://dd1f00oh8pvhe" path="res://characters/Luka/luka.gd" id="4_5ckkb"]
+[ext_resource type="PackedScene" uid="uid://biudctngggtjp" path="res://characters/skye/shadow.tscn" id="5_aou4a"]
+[ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://inimigos/inimigo.tscn" id="7_2hh7m"]
 [ext_resource type="Texture2D" uid="uid://bqi02njf7lt18" path="res://sprites/SPRITE.png" id="7_t8jxu"]
+[ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://Effects/areaEffects/frozen_area.tscn" id="9_pfhxm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lgngo"]
 texture = ExtResource("1_lgngo")
@@ -248,3 +249,6 @@ speed = 250
 
 [node name="inimigo2" parent="." instance=ExtResource("7_2hh7m")]
 position = Vector2(276, 373)
+
+[node name="FrozenArea" parent="." instance=ExtResource("9_pfhxm")]
+position = Vector2(-85, 232)
