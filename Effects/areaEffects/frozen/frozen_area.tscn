@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cuvb1ymty6e1g"]
 
-[ext_resource type="Script" uid="uid://ci0m03yl53t2c" path="res://Effects/areaEffects/frozen_area.gd" id="1_m24tj"]
+[ext_resource type="Script" uid="uid://ci0m03yl53t2c" path="res://Effects/areaEffects/frozen/frozen_area.gd" id="1_m24tj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2fng4"]
 radius = 61.81424

@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bixsvq0wfgqcm"]
+
+[ext_resource type="Script" uid="uid://bi44h5742rbmr" path="res://Effects/areaEffects/slime/slime_area.gd" id="1_j7cp2"]
+
+[node name="SlimeArea" type="Area2D"]
+script = ExtResource("1_j7cp2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="."]

@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cj04rk018ge"]
+
+[ext_resource type="Script" uid="uid://bsyv0jh6ed64g" path="res://UI/floating_number.gd" id="1_12nca"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_lih8t"]
+font_size = 24
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="floatingNumber" type="Label"]
+text = "aaa"
+label_settings = SubResource("LabelSettings_lih8t")
+script = ExtResource("1_12nca")
