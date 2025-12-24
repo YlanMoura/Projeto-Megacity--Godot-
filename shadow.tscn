@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://biudctngggtjp"]
+
+[ext_resource type="Script" uid="uid://bnopveuexv5iw" path="res://shadow.gd" id="1_6pqxc"]
+
+[node name="shadow" type="Node2D"]
+script = ExtResource("1_6pqxc")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+modulate = Color(1.3655106, 1.3655106, 1.3602304, 0.4117647)
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 10.0
+offset_bottom = 10.0
+color = Color(0, 0, 0, 1)

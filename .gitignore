@@ -1,0 +1,19 @@
+# Godot 4+ specific
+.godot/
+.import/
+
+# Godot-specific export settings
+export_presets.cfg
+
+# Mono/C# builds (caso use C# no futuro)
+.mono/
+.vscode/
+*.csproj
+*.sln
+
+# Crash logs
+*.log
+
+# OS Junk (Mac/Windows)
+.DS_Store
+Thumbs.db
