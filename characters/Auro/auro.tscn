@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cjj76jueu02nd"]
+
+[ext_resource type="Script" uid="uid://cjmp8sq0s2141" path="res://characters/Auro/auro.gd" id="1_mjc7d"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mjc7d"]
+size = Vector2(40, 40)
+
+[node name="Auro" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 15
+script = ExtResource("1_mjc7d")
+speed = 280.0
+dash_speed = 800.0
+dash_duration = 0.5
+dash_cooldown = 1.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+offset_left = -19.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 19.0
+color = Color(0.7360107, 0.91689456, 0.99999994, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_mjc7d")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true

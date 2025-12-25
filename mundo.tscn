@@ -6,9 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://euvhmmj7288o" path="res://characters/Luka/luka.tscn" id="4_t8jxu"]
 [ext_resource type="PackedScene" uid="uid://dvjyh2gqqlyb5" path="res://characters/skye/skye.tscn" id="5_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://inimigos/inimigo.tscn" id="7_2hh7m"]
+[ext_resource type="PackedScene" uid="uid://cjj76jueu02nd" path="res://characters/Auro/auro.tscn" id="7_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://Effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
 [ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://Effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
-[ext_resource type="PackedScene" uid="uid://de0uobd3novoa" path="res://characters/Inferno/skills/ZonaFogo.tscn" id="11_0oi55"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lgngo"]
 texture = ExtResource("1_lgngo")
@@ -377,12 +377,11 @@ raio_visual = 100.0
 [node name="FrozenArea" parent="." instance=ExtResource("9_pfhxm")]
 position = Vector2(2, 605)
 
-[node name="FireZone" parent="." instance=ExtResource("11_0oi55")]
-position = Vector2(230, -31)
-duration = 100.0
-
 [node name="Inferno" parent="." instance=ExtResource("3_t8jxu")]
 position = Vector2(-311, -113)
+
+[node name="Auro" parent="." instance=ExtResource("7_pfhxm")]
+position = Vector2(-39, 30)
 
 [node name="Luka" parent="." instance=ExtResource("4_t8jxu")]
 position = Vector2(-233, 21)

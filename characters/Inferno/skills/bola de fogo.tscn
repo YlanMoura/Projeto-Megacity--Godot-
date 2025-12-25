@@ -53,7 +53,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_i133e")
 }],
-"loop": true,
+"loop": false,
 "name": &"explosao",
 "speed": 17.0
 }, {
@@ -76,22 +76,24 @@ animations = [{
 }]
 
 [node name="BolaDeFogo" type="Area2D"]
-collision_mask = 15
+collision_mask = 13
 script = ExtResource("1_shnqs")
+dano_explosao = 25
+raio_explosao = 160.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 0)
 shape = SubResource("CircleShape2D_shnqs")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(10, 5)
-scale = Vector2(2, 2)
+position = Vector2(-24, -8)
+rotation = 3.1712632
+scale = Vector2(2.2638943, 2.2246392)
 sprite_frames = SubResource("SpriteFrames_l04nl")
-animation = &"explosao"
-frame_progress = 0.4285211
+animation = &"voando"
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(-13, -10)
+position = Vector2(-37, -9)
 rect = Rect2(-8.115, -12.515, 60.67, 43.93)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

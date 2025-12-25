@@ -1,9 +1,9 @@
 extends Area2D
 
 # --- Configurações de Combate ---
-@export var speed = 200
-@export var dano_explosao = 20        # Dano que causa na hora que explode
-@export var raio_explosao = 80.0      # Tamanho da área que a explosão atinge
+@export var speed = 600
+@export var dano_explosao = 50       # Dano que causa na hora que explode
+@export var raio_explosao = 260.0      # Tamanho da área que a explosão atinge
 
 # --- Configuração Visual ---
 # Se sua animação for pequena, aumente este valor (ex: x=3, y=3)

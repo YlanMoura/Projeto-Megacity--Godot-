@@ -6,7 +6,10 @@
 radius = 184.04347
 
 [node name="FireZone" type="Area2D"]
+collision_mask = 7
 script = ExtResource("1_qbbx4")
+damage_amount = 50
+heal_amount = 10
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 

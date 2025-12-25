@@ -53,7 +53,7 @@ func _on_tick_timer_timeout():
 			#    corpo.apply_slow(slow_factor)
 		
 		# 2. Se for o INFERNO -> Cura
-		elif corpo is ClassPlayer and corpo.name == "Inferno":
+		elif corpo is ClassPlayer and corpo.name == "Inferno" or corpo.name == "Auro" :
 			if corpo.has_method("heal"):
 				corpo.heal(heal_amount)
 				# print("Inferno a curar na zona!")

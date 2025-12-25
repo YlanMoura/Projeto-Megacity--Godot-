@@ -4,8 +4,10 @@ extends Node2D
 @onready var inferno = $Inferno
 @onready var skye = $Skye
 @onready var luka = $Luka 
+@onready var auro = $Auro
+
 # 2. Crie uma lista com TODOS os personagens
-@onready var personagens = [skye, inferno, luka] 
+@onready var personagens = [skye, inferno, luka, auro] 
 
 # 3. Qual o número do personagem atual? (0 = Skye, 1 = Inferno, 2 = Luka)
 var indice_atual = 0 
