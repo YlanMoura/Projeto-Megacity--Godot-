@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://euvhmmj7288o"]
+
+[ext_resource type="Script" uid="uid://dd1f00oh8pvhe" path="res://characters/Luka/luka.gd" id="1_rxipo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aou4a"]
+size = Vector2(40, 40)
+
+[node name="Luka" type="CharacterBody2D"]
+position = Vector2(34, 37)
+script = ExtResource("1_rxipo")
+speed = 401.0
+dash_duration = 1.0
+dash_cooldown = 3.0
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_aou4a")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(82, 79)
+position_smoothing_enabled = true

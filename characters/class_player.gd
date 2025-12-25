@@ -55,6 +55,7 @@ func heal(amount: int):
 	current_health += amount
 	if current_health > max_health:
 		current_health = max_health
+	print(name, " curou ", amount, " de dano. Vida: ", current_health)
 	mostrar_texto_flutuante(amount, "cura")
 
 func die():
