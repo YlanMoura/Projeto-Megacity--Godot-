@@ -1,0 +1,100 @@
+[gd_scene load_steps=13 format=3 uid="uid://b532sk0ibnfx0"]
+
+[ext_resource type="Texture2D" uid="uid://d3ymlsh01wny1" path="res://characters/Inferno/skills/Blue Effect Bullet Impact Explosion 32x32.png" id="1_o5nv6"]
+[ext_resource type="Script" uid="uid://bhwmy3l2ydae" path="res://characters/Inferno/skills/bola_de_fogo.gd" id="1_shnqs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_shnqs"]
+radius = 13.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shnqs"]
+atlas = ExtResource("1_o5nv6")
+region = Rect2(192, 156, 32, 39)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l04nl"]
+atlas = ExtResource("1_o5nv6")
+region = Rect2(224, 156, 32, 39)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y1rj2"]
+atlas = ExtResource("1_o5nv6")
+region = Rect2(256, 156, 32, 39)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i133e"]
+atlas = ExtResource("1_o5nv6")
+region = Rect2(288, 156, 32, 39)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0hd1l"]
+atlas = ExtResource("1_o5nv6")
+region = Rect2(352, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vk4p"]
+atlas = ExtResource("1_o5nv6")
+region = Rect2(384, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m31l6"]
+atlas = ExtResource("1_o5nv6")
+region = Rect2(416, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pui5q"]
+atlas = ExtResource("1_o5nv6")
+region = Rect2(448, 0, 32, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_l04nl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shnqs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l04nl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y1rj2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i133e")
+}],
+"loop": false,
+"name": &"explosao",
+"speed": 17.0
+}, {
+"frames": [{
+"duration": 1.01,
+"texture": SubResource("AtlasTexture_0hd1l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vk4p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m31l6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pui5q")
+}],
+"loop": true,
+"name": &"voando",
+"speed": 12.0
+}]
+
+[node name="BolaDeFogo" type="Area2D"]
+collision_mask = 13
+script = ExtResource("1_shnqs")
+dano_explosao = 25
+raio_explosao = 160.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-3, 0)
+shape = SubResource("CircleShape2D_shnqs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-24, -8)
+rotation = 3.1712632
+scale = Vector2(2.2638943, 2.2246392)
+sprite_frames = SubResource("SpriteFrames_l04nl")
+animation = &"voando"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-37, -9)
+rect = Rect2(-8.115, -12.515, 60.67, 43.93)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

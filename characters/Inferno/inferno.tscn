@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://sa5vagwuf0so"]
+
+[ext_resource type="Script" uid="uid://bxyvot7u231ja" path="res://characters/Inferno/inferno.gd" id="1_gmwpf"]
+[ext_resource type="Texture2D" uid="uid://d2hpxmnm5imxk" path="res://characters/Inferno/sprites/inferno.png" id="2_c3ek0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lgngo"]
+size = Vector2(62, 115)
+
+[node name="Inferno" type="CharacterBody2D"]
+script = ExtResource("1_gmwpf")
+max_health = 150
+max_shield = 30
+skill_1_cooldown = 1.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-12.999998, 7.9999924)
+scale = Vector2(2.0859373, 2.0859373)
+texture = ExtResource("2_c3ek0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 15)
+shape = SubResource("RectangleShape2D_lgngo")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true

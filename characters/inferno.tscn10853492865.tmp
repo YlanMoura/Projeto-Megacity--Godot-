@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://sa5vagwuf0so"]
+
+[ext_resource type="Script" uid="uid://bxyvot7u231ja" path="res://characters/Inferno/inferno.gd" id="1_gmwpf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lgngo"]
+size = Vector2(40, 40)
+
+[node name="Inferno" type="CharacterBody2D"]
+script = ExtResource("1_gmwpf")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+offset_left = -19.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 19.0
+color = Color(0.25490198, 1, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_lgngo")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true

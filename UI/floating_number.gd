@@ -19,6 +19,9 @@ func setup(valor: int, tipo: String):
 		modulate = Color(1, 0.2, 0.2) # Vermelho vivo
 	elif tipo == "cura":
 		modulate = Color(0.2, 1, 0.2) # Verde vivo
+	elif tipo == "escudo":
+		modulate = Color.CYAN 
+		
 
 func animar_e_morrer():
 	# Cria um Tween (o animador de código)

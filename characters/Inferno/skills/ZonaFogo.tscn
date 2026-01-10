@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://de0uobd3novoa"]
+
+[ext_resource type="Script" uid="uid://bnyy6o4j2iqod" path="res://characters/Inferno/skills/zona_fogo.gd" id="1_qbbx4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qbbx4"]
+radius = 184.04347
+
+[node name="FireZone" type="Area2D"]
+collision_mask = 7
+script = ExtResource("1_qbbx4")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qbbx4")

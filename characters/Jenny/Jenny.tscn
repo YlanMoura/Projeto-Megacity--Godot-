@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://7scp7k2nn5sa"]
+
+[ext_resource type="Script" uid="uid://du2q4d6yh3juh" path="res://characters/Jenny/jenny.gd" id="1_1i2qb"]
+
+[node name="Jenny" type="CharacterBody2D"]
+script = ExtResource("1_1i2qb")
+max_health = 220
+speed = 350.0

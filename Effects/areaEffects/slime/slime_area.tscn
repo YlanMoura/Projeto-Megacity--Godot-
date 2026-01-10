@@ -4,6 +4,7 @@
 
 [node name="SlimeArea" type="Area2D"]
 script = ExtResource("1_j7cp2")
+damage_amount = 35
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 
