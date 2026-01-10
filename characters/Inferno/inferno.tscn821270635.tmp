@@ -8,8 +8,6 @@ size = Vector2(62, 115)
 
 [node name="Inferno" type="CharacterBody2D"]
 script = ExtResource("1_gmwpf")
-max_health = 150
-max_shield = 30
 skill_1_cooldown = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

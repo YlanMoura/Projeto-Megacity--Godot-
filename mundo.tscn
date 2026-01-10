@@ -377,9 +377,6 @@ raio_visual = 100.0
 [node name="FrozenArea" parent="." instance=ExtResource("9_pfhxm")]
 position = Vector2(2, 605)
 
-[node name="Inferno" parent="." instance=ExtResource("3_t8jxu")]
-position = Vector2(-311, -113)
-
 [node name="Auro" parent="." instance=ExtResource("7_pfhxm")]
 position = Vector2(-39, 30)
 
@@ -388,3 +385,7 @@ position = Vector2(-233, 21)
 
 [node name="Skye" parent="." instance=ExtResource("5_pfhxm")]
 position = Vector2(-95, -78)
+
+[node name="Inferno" parent="." instance=ExtResource("3_t8jxu")]
+position = Vector2(-528, -28)
+dash_speed = 1200.0
