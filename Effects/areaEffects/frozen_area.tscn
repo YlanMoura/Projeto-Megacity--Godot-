@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://btjq0mkkakqh4"]
+
+[ext_resource type="Script" path="res://Effects/areaEffects/frozen_area.gd" id="1_m24tj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2fng4"]
+radius = 61.81424
+
+[node name="FrozenArea" type="Area2D"]
+position = Vector2(-3, 1)
+script = ExtResource("1_m24tj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2fng4")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]

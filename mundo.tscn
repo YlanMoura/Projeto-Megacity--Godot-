@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://c28vro5ybqqvt"]
+[gd_scene load_steps=14 format=3 uid="uid://c28vro5ybqqvt"]
 
 [ext_resource type="Texture2D" uid="uid://4u66n3owft75" path="res://icon.svg" id="1_lgngo"]
 [ext_resource type="Script" uid="uid://blmw8asaqnfvs" path="res://mundo.gd" id="1_otwa2"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://Effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
 [ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://Effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://bkj6pr5rjm8mf" path="res://inimigos/spawner/Spawner.tscn" id="10_pij3u"]
+[ext_resource type="PackedScene" uid="uid://cb327j63spjo8" path="res://characters/Balpo/balpo.tscn" id="11_0oi55"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lgngo"]
 texture = ExtResource("1_lgngo")
@@ -396,3 +397,9 @@ dash_speed = 1200.0
 [node name="Spawner" parent="." instance=ExtResource("10_pij3u")]
 position = Vector2(826, 234)
 enemy_scene = ExtResource("7_2hh7m")
+
+[node name="inimigo3" parent="." instance=ExtResource("7_2hh7m")]
+position = Vector2(552, 451)
+
+[node name="Balpo" parent="." instance=ExtResource("11_0oi55")]
+position = Vector2(-328, -70)
