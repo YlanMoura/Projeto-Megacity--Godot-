@@ -78,8 +78,6 @@ animations = [{
 [node name="BolaDeFogo" type="Area2D"]
 collision_mask = 13
 script = ExtResource("1_shnqs")
-dano_explosao = 25
-raio_explosao = 160.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-3, 0)
