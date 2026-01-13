@@ -402,4 +402,4 @@ enemy_scene = ExtResource("7_2hh7m")
 position = Vector2(552, 451)
 
 [node name="Balpo" parent="." instance=ExtResource("11_0oi55")]
-position = Vector2(-328, -70)
+position = Vector2(-335, -62)
