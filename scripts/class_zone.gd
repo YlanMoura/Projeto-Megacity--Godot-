@@ -1,53 +1,69 @@
 class_name ZoneEffect extends Area2D
-# O comando 'class_name' acima permite que o Godot reconheça
-# esse script como um TIPO novo, assim como existe 'Sprite2D' ou 'Node'.
 
 # --- Configurações Gerais ---
-@export var duration: float = 0.0 # Tempo de vida (0 = infinito)
+@export var duration: float = 5.0     # Tempo de vida total
+@export var tick_rate: float = 0.5    # Tempo entre cada "pulso" (0 = desativado)
+@export var affects_caster: bool = true # Se 'false', o dono não é afetado
 
 # --- Variáveis de Controle ---
-var caster = null # Quem soltou a skill (Player ou Inimigo)
-var targets_inside: Array = [] # Lista de quem está dentro da área
+var caster = null 
+var targets_inside: Array = [] 
+var tick_timer: Timer = null # Timer interno para controlar os pulsos
 
 func _ready():
-	# Conecta os sinais de colisão automaticamente via código.
-	# Assim você não precisa conectar manualmente toda vez que criar uma magia nova.
+	# Conexões automáticas
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
 	
-	# Se tiver duração, liga o cronômetro da morte
+	# Configura a morte da zona
 	if duration > 0:
-		await get_tree().create_timer(duration).timeout
-		_end_effect()
+		get_tree().create_timer(duration).timeout.connect(_end_effect)
+	
+	# Configura o sistema de Ticks (Dano/Cura por segundo)
+	if tick_rate > 0:
+		tick_timer = Timer.new()
+		tick_timer.wait_time = tick_rate
+		tick_timer.autostart = true
+		tick_timer.timeout.connect(_on_tick) # Chama a função de pulso
+		add_child(tick_timer)
 
-# --- Lógica Interna (Não mexer nas classes filhas) ---
+# --- Lógica de Entrada/Saída ---
 func _on_body_entered(body):
-	# Regra de Segurança: A magia não afeta quem a soltou
-	if body == caster: 
-		return 
+	# Trava opcional: Se affects_caster for false, ignora o dono
+	if not affects_caster and body == caster:
+		return
 	
 	targets_inside.append(body)
-	_apply_effect(body) # Chama a função específica da magia
+	_apply_effect(body) # Efeito imediato (ex: aplicar Slow)
 
 func _on_body_exited(body):
 	if body in targets_inside:
 		targets_inside.erase(body)
-		_remove_effect(body) # Remove o efeito específico
+		_remove_effect(body) # Remover efeito (ex: tirar Slow)
 
 func _end_effect():
-	# Antes da magia sumir, remove o efeito de todo mundo que ainda tá dentro
 	for body in targets_inside:
 		if is_instance_valid(body):
 			_remove_effect(body)
-	
-	queue_free() # Destroi o objeto
+	queue_free()
 
-# --- Funções "Ocas" (Interface) ---
-# As classes filhas (Gelo, Veneno, Fogo) vão escrever por cima dessas funções.
-# Aqui elas ficam vazias (pass) só para o Godot não dar erro.
+# --- INTERFACE (As filhas mexem aqui) ---
 
+# 1. Chamado quando entra (Buffs, Slows)
 func _apply_effect(body):
 	pass 
 
+# 2. Chamado quando sai (Remover Buffs, Slows)
 func _remove_effect(body):
+	pass
+
+# 3. Chamado a cada X segundos (Dano, Cura) <--- NOVO!
+func _on_tick():
+	# Por padrão, aplica o efeito de tick em todo mundo que tá dentro
+	for body in targets_inside:
+		if is_instance_valid(body):
+			_tick_effect(body)
+
+# 4. A lógica individual do Dano/Cura
+func _tick_effect(body):
 	pass

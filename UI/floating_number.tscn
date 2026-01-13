@@ -11,3 +11,4 @@ outline_color = Color(0, 0, 0, 1)
 text = "aaa"
 label_settings = SubResource("LabelSettings_lih8t")
 script = ExtResource("1_12nca")
+duracao = 1.2
