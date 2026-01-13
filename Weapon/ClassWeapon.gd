@@ -1,10 +1,14 @@
 extends Node2D
-class_name ArmaBase
+class_name ClassWeapon
 var player: ClassPlayer
 
-#--- Enums para Organização ---
-enum Raridade { COMUM, INCOMUM, RARO, EPICO, LENDARIO}
+# --- Enums para Organização ---
+enum Raridade { COMUM, INCOMUM, RARO, EPICO, LENDARIO, UNICA}
 enum Elemento { FISICO, FOGO, CHOQUE, CORROSIVO, ÉTER}
+
+# --- NOME DA ARMA --- #
+
+@export var nome_arma: String ="Arma Base" 
 
 # --- ATRIBUTOS --- #
 @export_group("Stats da Arma")
