@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://cb327j63spjo8"]
+
+[ext_resource type="Script" uid="uid://da7kdc1ahr2jw" path="res://characters/Balpo/balpo.gd" id="1_se3bu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_se3bu"]
+size = Vector2(40, 40)
+
+[node name="Balpo" type="CharacterBody2D"]
+position = Vector2(0, -1)
+script = ExtResource("1_se3bu")
+max_health = 180
+max_shield = 150
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(40, 40)
+offset_left = -19.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 19.0
+color = Color(0.99330443, 0.8522597, 0.7791907, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_se3bu")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true

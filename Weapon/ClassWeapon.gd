@@ -1,4 +1,4 @@
-class_name BaseWeapon
+class_name classWeapon
 extends Node2D
 
 @export var weapon_name := "Weapon"

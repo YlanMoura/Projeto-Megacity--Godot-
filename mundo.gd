@@ -5,43 +5,49 @@ extends Node2D
 @onready var skye = $Skye
 @onready var luka = $Luka 
 @onready var auro = $Auro
+@onready var balpo = $Balpo
 
-# 2. Crie uma lista com TODOS os personagens
-@onready var personagens = [skye, inferno, luka, auro] 
+# Lista com TODOS os personagens
+@onready var personagens = [skye, inferno, luka, auro, balpo] 
 
-# 3. Qual o número do personagem atual? (0 = Skye, 1 = Inferno, 2 = Luka)
+# Índice do personagem atual
 var indice_atual = 0 
 
 func _ready():
-	# Começa ativando só o primeiro da lista
+	# Começa ativando só o primeiro da lista e avisando os inimigos
 	atualizar_foco()
-	
-	# 1. Pega a lista de TODOS os nós que têm a etiqueta "inimigos"
-	var exercito_inimigo = get_tree().get_nodes_in_group("inimigos")
-	
-	# 2. Passa de um por um (loop) e define o alvo
-	for soldado in exercito_inimigo:
-		soldado.target = skye
 
 func _physics_process(delta):
-	# Quando apertar TAB (ou a tecla que você configurou)
-	if Input.is_action_just_pressed("ui_focus_next"): # Geralmente é o TAB
+	# Botão de troca (TAB)
+	if Input.is_action_just_pressed("ui_focus_next"):
 		trocar_personagem()
 
 func trocar_personagem():
-	# Aumenta o índice (+1)
 	indice_atual += 1
 	
-	# Se passou do último (3), volta para o zero
 	if indice_atual >= personagens.size():
 		indice_atual = 0
 		
 	atualizar_foco()
 
 func atualizar_foco():
-	# Passa por todos os personagens da lista
+	var novo_alvo = null
+	
+	# 1. Ativa o personagem certo e desativa os outros
 	for i in range(personagens.size()):
 		if i == indice_atual:
-			personagens[i].set_active(true) # Ativa o escolhido
+			personagens[i].set_active(true)
+			novo_alvo = personagens[i] # Guardamos quem é o ativo
 		else:
-			personagens[i].set_active(false) # Desliga os outros
+			personagens[i].set_active(false)
+	
+	# 2. AVISA O EXÉRCITO INIMIGO (A novidade está aqui!)
+	# Pega todos os inimigos que já nasceram (do Spawner ou colocados na mão)
+	# IMPORTANTE: Use o nome do grupo que você colocou no script do Inimigo ("enemies" ou "inimigos")
+	var inimigos_vivos = get_tree().get_nodes_in_group("enemies") 
+	
+	for inimigo in inimigos_vivos:
+		# Se o inimigo ainda existe e tem a variável target
+		if is_instance_valid(inimigo) and "target" in inimigo:
+			inimigo.target = novo_alvo
+			# print("Inimigo mudou o alvo para: ", novo_alvo.name)

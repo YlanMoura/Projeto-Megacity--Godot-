@@ -1,80 +1,86 @@
 extends ClassPlayer
 
-# Variável de controle de troca de personagem (que já estava no seu código)
-var is_active = false
-@onready var camera = $Camera2D
+# --- PASSIVA: COLETA DE ALMAS ---
+var almas_atuais: int = 0
+var max_almas: int = 40
+var bonus_atk_por_alma: float = 0.05 
+var bonus_shield_por_alma: int = 2
+
+# Variável nova para guardar o valor original do escudo (ex: 50)
+var max_shield_base_original: int = 0 
 
 # PRELOAD DA BOLA DE FOGO
-# Ajuste o caminho abaixo para onde você salvou a cena da bola de fogo!
 const FIREBALL_SCENE = preload("res://characters/Inferno/skills/bola de fogo.tscn") 
 
 func _ready():
-	super._ready() # Chama o _ready do pai (ClassPlayer) para configurar vida, etc.
+	# 1. Antes de qualquer coisa, salvamos quanto era o escudo original configurado no Inspector
+	max_shield_base_original = max_shield 
+	
+	super._ready()
+	
+	almas_atuais = 0
+	atualizar_passiva_stats()
 
 func _physics_process(delta):
-	if not is_active:
-		return
-		
-	var direction = Input.get_vector("esquerda", "direita", "cima", "baixo")
+	super(delta) 
+
+	if not is_active: return
 	
 	if Input.is_key_pressed(KEY_K):
 		take_damage(10)
 
-	# 1. Gatilho do Dash
-	if Input.is_action_just_pressed("dash") and current_dashes > 0 and direction != Vector2.ZERO:
-		start_dash(direction) # Passamos a direção para o dash
-	
-	# 2. Movimentação Normal (Só acontece se NÃO estiver em dash)
-	if not is_dashing:
-		if direction:
-			velocity = direction * speed
-		else:
-			velocity = velocity.move_toward(Vector2.ZERO, speed)
-	
-	move_and_slide()
-
-# --- AQUI ESTÁ A MÁGICA DA SKILL 1 ---
-# Essa função é chamada automaticamente pelo ClassPlayer quando aperta "E"
+# --- SKILL 1 (Bola de Fogo) ---
 func execute_skill_1_logic():
-	# Verifica se o personagem está ativo antes de soltar a skill
-	if not is_active:
-		return
+	if not is_active: return
 
-	# Instancia a bola de fogo
-	var fireball = FIREBALL_SCENE.instantiate()
+	# Usa o stats["atk"] atualizado pela passiva
+	var dano_explosao = int(stats["atk"] * 1.7)  
+	var cura_zona = int(stats["atk"] * 0.10)     
+	var dano_zona = int(stats["atk"] * 0.25)     
 	
-	# Define onde ela nasce (na posição do Inferno)
-	fireball.global_position = global_position
+	var pacote_de_dano = calculate_damage(dano_explosao, "")
+	pacote_de_dano["cura_valor"] = cura_zona
+	pacote_de_dano["dano_zona_valor"] = dano_zona 
 	
-	# Faz a bola olhar para o mouse
-	fireball.look_at(get_global_mouse_position())
-	
-	# Adiciona na cena principal (não como filho do player, senão ela gira junto com ele)
-	get_tree().current_scene.add_child(fireball)
-	
-	print("Inferno lançou Bola de Fogo!")
+	if FIREBALL_SCENE:
+		var fireball = FIREBALL_SCENE.instantiate()
+		fireball.global_position = global_position
+		var mouse_pos = get_global_mouse_position()
+		var direcao_tiro = global_position.direction_to(mouse_pos)
+		fireball.setup(direcao_tiro, pacote_de_dano, self)
+		get_tree().current_scene.add_child(fireball)
 
-# --- Controle de Ativação do Personagem ---
-func set_active(state: bool):
-	is_active = state
-	camera.enabled = state
-	if state:
-		camera.make_current()
+# --- SISTEMA DE ALMAS ---
+
+func receber_alma():
+	# 1. Cura 2% da Vida Máxima
+	var cura_passiva = int(max_health * 0.02)
+	heal(cura_passiva)
+	
+	# 2. Adiciona Acúmulo
+	if almas_atuais < max_almas:
+		almas_atuais += 1
+		atualizar_passiva_stats()
+		print("Alma Coletada! Total: ", almas_atuais, " | ATK Atual: ", stats["atk"])
 		
-		
-func start_dash(dir: Vector2):
-	current_dashes -= 1
-	is_dashing = true
+		# print("Alma +1! Total: ", almas_atuais, " | Novo Max Shield: ", max_shield)
+
+func atualizar_passiva_stats():
+	# --- CÁLCULO DO ATAQUE ---
+	# base_atk é fixo na ClassPlayer, seguro usar direto
+	var bonus_atk = int(base_atk * (bonus_atk_por_alma * almas_atuais))
+	stats["atk"] = base_atk + bonus_atk
 	
-	# Aplica a velocidade alta do dash
-	velocity = dir * dash_speed
+	# --- CÁLCULO DO ESCUDO (A CORREÇÃO) ---
+	# Usamos a variável que criamos 'max_shield_base_original' (50) para calcular
+	var bonus_shield = bonus_shield_por_alma * almas_atuais
+	var novo_maximo = max_shield_base_original + bonus_shield
 	
-	# Inicia o cooldown para recuperar o dash
-	recharge_one_dash() 
+	# 1. Atualiza o dicionário (para consultas de stats)
+	stats["max_shield"] = novo_maximo
 	
-	# Espera o tempo de duração do dash
-	await get_tree().create_timer(dash_duration).timeout
+	# 2. Atualiza a variável DA MÃE (para a regeneração funcionar até o novo teto)
+	max_shield = novo_maximo
 	
-	is_dashing = false
-	# Opcional: Reduzir a velocidade bruscamente após o dash para não "deslizar"
-	velocity = dir * speed
+	# 3. Força a UI a redesenhar os números na tela
+	actualizar_ui_vida()

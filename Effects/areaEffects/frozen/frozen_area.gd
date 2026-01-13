@@ -1,7 +1,10 @@
 extends ZoneEffect
 
 @export var slow_factor: float = 0.5
-@export var raio_visual: float = 160.0 # Controla o desenho E a colisão agora
+@export var raio_visual: float = 160.0 # Controla o desenho E a colisão
+
+# Dicionário para guardar quanta velocidade tiramos (O "Caderninho")
+var debitos_de_velocidade = {}
 
 func _ready():
 	# 1. Desenha o visual
@@ -13,17 +16,40 @@ func _ready():
 	# 3. Chama o pai
 	super._ready()
 
+# --- APLICAÇÃO SEGURA DE LENTIDÃO ---
+
 func _apply_effect(body):
-	if "speed" in body:
-		body.speed *= slow_factor
+	# Verifica se o corpo tem o sistema novo de stats
+	if "stats" in body and body.stats.has("speed"):
+		var speed_original = body.stats["speed"]
+		
+		# Calcula quanto vamos REDUZIR.
+		# Se speed é 400 e fator é 0.5 (50%), a redução é 200.
+		var valor_retirado = speed_original * (1.0 - slow_factor)
+		
+		# Subtrai do dicionário oficial
+		body.stats["speed"] -= valor_retirado
+		
+		# Anota no caderninho para devolver depois
+		debitos_de_velocidade[body] = valor_retirado
+		
+		# Efeito visual (Azul Gelo)
 		body.modulate = Color(0.5, 1.5, 2.0)
 
 func _remove_effect(body):
-	if "speed" in body:
-		body.speed /= slow_factor
-		body.modulate = Color.WHITE
+	# Verifica se esse corpo deve algo no caderninho
+	if debitos_de_velocidade.has(body):
+		
+		# Se o corpo ainda existe (não morreu/desapareceu)
+		if is_instance_valid(body) and "stats" in body:
+			# Devolve o valor exato que tirou
+			body.stats["speed"] += debitos_de_velocidade[body]
+			body.modulate = Color.WHITE
+		
+		# Rasga a folha do caderninho (limpa a memória)
+		debitos_de_velocidade.erase(body)
 
-# --- A MÁGICA VISUAL ---
+# --- A MÁGICA VISUAL (MANTIDA IGUAL) ---
 func criar_circulo_perfeito():
 	var visual = get_node_or_null("Polygon2D")
 	if visual:
@@ -38,16 +64,13 @@ func criar_circulo_perfeito():
 		visual.polygon = pontos_array
 		visual.color = Color(0, 1, 1, 0.5)
 
-# --- A MÁGICA DA COLISÃO (NOVA) ---
+# --- A MÁGICA DA COLISÃO (MANTIDA IGUAL) ---
 func atualizar_colisao():
 	var col_shape = get_node_or_null("CollisionShape2D")
 	
 	if col_shape:
-		# Cria um novo Círculo matemático na memória
 		var forma_circular = CircleShape2D.new()
 		forma_circular.radius = raio_visual
-		
-		# Aplica esse círculo no nó de colisão
 		col_shape.shape = forma_circular
 		print("Colisão ajustada para raio: ", raio_visual)
 	else:

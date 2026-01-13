@@ -10,6 +10,7 @@ size = Vector2(62, 115)
 script = ExtResource("1_gmwpf")
 max_health = 150
 max_shield = 30
+base_atk = 50
 skill_1_cooldown = 1.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
