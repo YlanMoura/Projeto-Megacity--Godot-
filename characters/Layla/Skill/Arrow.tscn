@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfyaavw6y2yh5"]
+
+[ext_resource type="Script" uid="uid://b3iltald88phe" path="res://characters/Layla/Skill/arrow.gd" id="1_gayus"]
+
+[node name="Arrow" type="Area2D"]
+script = ExtResource("1_gayus")
