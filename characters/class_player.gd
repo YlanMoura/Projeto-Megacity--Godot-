@@ -92,7 +92,7 @@ func _physics_process(delta: float) -> void:
 		return
 
 	var direction = Input.get_vector("esquerda", "direita", "cima", "baixo")
-	
+
 	# 1. Gatilho do Dash
 	# Lê "dash_cooldown" do stats, caso queira buffar cooldown no futuro
 	if Input.is_action_just_pressed("dash") and current_dashes > 0 and direction != Vector2.ZERO:

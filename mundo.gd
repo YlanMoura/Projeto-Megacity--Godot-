@@ -6,9 +6,10 @@ extends Node2D
 @onready var luka = $Luka 
 @onready var auro = $Auro
 @onready var balpo = $Balpo
+@onready var layla = $Layla
 
 # Lista com TODOS os personagens
-@onready var personagens = [skye, inferno, luka, auro, balpo] 
+@onready var personagens = [skye, inferno, luka, auro, balpo, layla] 
 
 # Índice do personagem atual
 var indice_atual = 0 
