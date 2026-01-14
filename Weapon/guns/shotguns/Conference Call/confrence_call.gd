@@ -4,6 +4,14 @@ extends ClassWeapon
 @export var quantidade_pellets: int = 8 #Número de projéteis por tiro
 @export var dispersao: float = 0.2 # O "espalhamento" das balas
 
+@export_group("Configurações de Mundo")
+@export var esta_no_chao: bool = true # Se true, ela não atira, apenas espera ser coletada
+
+@onready var area_interacao: Area2D = $Area2D #Você precisará adicionar esse nó na cena
+@onready var ui_info: Control = $LootCard     # Um nó de UI para o cartão de info
+
+
+
 func _ready():
 	super._ready() # Importante: Executa a busca pelo player que está no pai
 	# Você pode customizar atributos específicos aqui

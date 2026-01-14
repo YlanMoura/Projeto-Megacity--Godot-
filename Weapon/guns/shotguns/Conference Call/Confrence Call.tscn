@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://drjs36rbidxbx"]
+
+[ext_resource type="Script" uid="uid://l6j8mnixqkw8" path="res://Weapon/guns/shotguns/Conference Call/confrence_call.gd" id="1_h3umh"]
+
+[node name="ConfrenceCall" type="Node2D"]
+script = ExtResource("1_h3umh")
+quantidade_pellets = 5
+dispersao = 0.15
+esta_no_chao = false
+nome_arma = null
+raridade = 4
+tipo_elemento = null
+dano_base = 15.0
+cadencia_tiro = 0.25
+tamanho_pente = 40
+velocidade_recarga = 3.0
+chance_critico = null
+multiplicador_critico = null
+esta_no_chao = false
