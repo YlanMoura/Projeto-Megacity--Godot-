@@ -21,9 +21,13 @@ enum Elemento { FISICO, FOGO, CHOQUE, CORROSIVO, ETER, GELO}
 @export var velocidade_recarga: float = 2.0
 @export var chance_critico: float = 0.1 #10% de chance
 @export var multiplicador_critico: float = 2.0 #Dano x2
+@export var quantidade_pellets: int = 1
+@export var dispersao: float = 0.05
 
 @export_group("Mundo")
 @export var esta_no_chao: bool = false # Define se a arma começa no chão ou na mão
+
+
 
 #--- Variáveis de Estado ---
 
@@ -50,22 +54,6 @@ func _physics_process(_delta):
 func tentar_atirar():
 	if pode_atirar and munição_atual > 0:
 		disparar()
-
-func disparar():
-	pode_atirar = false
-	munição_atual -= 1
-	
-	# Usa a função de cálculo que já existe no seu Player
-	var resultado = player.calculate_damage(dano_base, "atk")
-	
-	var dano_final = resultado["value"]
-	var foi_critico = resultado["critical"]
-	
-	print("Dano: ", dano_final, " | Crítico: ", foi_critico)
-	
-	await get_tree().create_timer(cadencia_tiro).timeout
-	pode_atirar = true
-	
 func drop():
 	#  1. Libera a arma para ser processada no mundo
 	is_active = false
@@ -91,3 +79,28 @@ func drop():
 	
 	print(nome_arma, " foi dropada!")
 	
+func disparar():
+	pode_atirar = false
+	munição_atual -= 1
+	
+	#O loop agora usa a variável da classe pai
+	for i in range(quantidade_pellets):
+		# 1. Calcula dano (cada pellet tem seu próprio cálculo de crítico)
+		var resultado = player.calculate_damage(dano_base, "atk")
+		
+		# 2. Calcula a direção com dispersão
+		# Usamos global_transform.x para saber onde a arma está apontada
+		var angulo_final = randf_range(-dispersao, dispersao)
+		var direcao = Vector2.RIGHT.rotated(global_rotation + angulo_final)
+		
+		# 3. Chamar a criação do projétil real
+		criar_projetil(direcao, resultado)
+	
+	# 4. Espera o tempo entre tiros
+	await get_tree().create_timer(cadencia_tiro).timeout
+	pode_atirar = true
+	
+#Função que será responsável por spawnar a bala no mundo
+func criar_projetil(direcao: Vector2, dados_dano: Dictionary):
+		#Por enquanto deixamos um print, mas aqui irá o código de instanciar a cena da bala
+		print("Tiro disparado! Dano: ", dados_dano["value"], " Direção: ", direcao)
