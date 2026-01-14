@@ -29,6 +29,9 @@ enum Elemento { FISICO, FOGO, CHOQUE, CORROSIVO, ETER, GELO}
 
 
 
+@export_group("Mundo")
+@export var esta_no_chao: bool = false # Define se a arma começa no chão ou na mão
+
 #--- Variáveis de Estado ---
 
 var munição_atual: int
