@@ -16,4 +16,10 @@ tamanho_pente = 40
 velocidade_recarga = 3.0
 chance_critico = null
 multiplicador_critico = null
-esta_no_chao = false
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 9.0
+offset_bottom = 9.0
+color = Color(0.18359044, 0.18359044, 0.18359044, 1)
