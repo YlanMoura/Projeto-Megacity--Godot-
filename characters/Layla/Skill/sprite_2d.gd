@@ -26,7 +26,6 @@ func _physics_process(delta):
 	position += direcao * velocidade * delta
 
 func _on_body_entered(body):
-	print("A Flecha bateu em algo: ", body.name)
 	if body == shooter: return
 	
 	if body.has_method("take_damage"):

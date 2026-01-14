@@ -9,7 +9,7 @@ extends Node2D
 @onready var layla = $Layla
 
 # Lista com TODOS os personagens
-@onready var personagens = [skye, inferno, luka, auro, balpo, layla] 
+@onready var personagens = [layla, skye, inferno, luka, auro, balpo] 
 
 # Índice do personagem atual
 var indice_atual = 0 
