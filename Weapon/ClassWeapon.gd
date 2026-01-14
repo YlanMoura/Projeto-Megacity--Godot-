@@ -4,7 +4,7 @@ var player: ClassPlayer
 
 # --- Enums para Organização ---
 enum Raridade { COMUM, INCOMUM, RARO, EPICO, LENDARIO, UNICA}
-enum Elemento { FISICO, FOGO, CHOQUE, CORROSIVO, ÉTER}
+enum Elemento { FISICO, FOGO, CHOQUE, CORROSIVO, ETER, GELO}
 
 # --- NOME DA ARMA --- #
 
@@ -21,6 +21,9 @@ enum Elemento { FISICO, FOGO, CHOQUE, CORROSIVO, ÉTER}
 @export var velocidade_recarga: float = 2.0
 @export var chance_critico: float = 0.1 #10% de chance
 @export var multiplicador_critico: float = 2.0 #Dano x2
+
+@export_group("Mundo")
+@export var esta_no_chao: bool = false # Define se a arma começa no chão ou na mão
 
 #--- Variáveis de Estado ---
 
@@ -62,3 +65,29 @@ func disparar():
 	
 	await get_tree().create_timer(cadencia_tiro).timeout
 	pode_atirar = true
+	
+func drop():
+	#  1. Libera a arma para ser processada no mundo
+	is_active = false
+	esta_no_chao = true
+	
+	# 2. Salva a posição global atual antes de mudar de "pai"
+	var posicao_global_atual = global_position
+	
+	# 3. Muda o "pai" da arma.
+	# Ela deixa de ser filha do Player e vira filha da Cena Principal (o mapa)
+	var mapa = get_tree().current_scene
+	get_parent().remove_child(self)
+	mapa.add_child(self)
+	
+	# 4. Reposiciona a arma onde o jogador a soltou
+	global_position = posicao_global_atual
+	
+	# 5. Efeito visual de "pulinho"
+	# Faz a arma dar um salto aleatório para o lado ao cair
+	var direcao_drop = Vector2(randf_range (-60, 60), randf_range (-30, -50))
+	var tween = create_tween()
+	tween.tween_property(self, "global_position", global_position + direcao_drop, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	
+	print(nome_arma, " foi dropada!")
+	
