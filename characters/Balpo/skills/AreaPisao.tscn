@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cj7687n13v1or"]
+
+[ext_resource type="Script" uid="uid://rcw3ybe81vuj" path="res://characters/Balpo/skills/area_pisao.gd" id="1_v7tkc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v7tkc"]
+radius = 37.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wpcmj"]
+
+[sub_resource type="Gradient" id="Gradient_v7tkc"]
+offsets = PackedFloat32Array(0, 0.9915254)
+colors = PackedColorArray(1, 0.545, 0.3, 1, 0.8598479, 0.45293647, 0.23644453, 0.42352942)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wpcmj"]
+gradient = SubResource("Gradient_v7tkc")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_wtfcw"]
+particle_flag_disable_z = true
+inherit_velocity_ratio = -0.055
+spread = 180.0
+initial_velocity_min = 152.37
+initial_velocity_max = 270.62
+gravity = Vector3(0, 0, 0)
+scale_max = 6.8799996
+scale_over_velocity_max = 252.93999
+color_ramp = SubResource("GradientTexture1D_wpcmj")
+
+[node name="AreaPisao" type="Area2D"]
+collision_mask = 7
+script = ExtResource("1_v7tkc")
+duration = 0.5
+tick_rate = 0.0
+affects_caster = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_v7tkc")
+debug_color = Color(1.92523e-07, 0.5976562, 0.7152132, 0.41960785)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+scale = Vector2(3.22, 3.22)
+amount = 50
+amount_ratio = 0.7129
+texture = SubResource("CanvasTexture_wpcmj")
+lifetime = 0.51
+speed_scale = 0.66
+explosiveness = 1.0
+randomness = 0.74
+process_material = SubResource("ParticleProcessMaterial_wtfcw")

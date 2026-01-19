@@ -29,6 +29,9 @@ func _ready():
 
 # --- Lógica de Entrada/Saída ---
 func _on_body_entered(body):
+	# --- LINHA DE DEBUG ---
+	print("A Zona ", name, " encostou em: ", body.name) 
+	# ----------------------
 	# Trava opcional: Se affects_caster for false, ignora o dono
 	if not affects_caster and body == caster:
 		return
