@@ -16,35 +16,34 @@ var carregando_tiro: bool = false
 
 func _ready():
 	super._ready()
-	
-	# Configurações iniciais da Layla
-	speed = 180 # Ela pode ser um pouco mais rápida que o Inferno
-	max_health = 40 # Mas tem menos vida
-	current_health = max_health
+
 	
 	aim_line.visible = false
 
 func _physics_process(delta):
-	# Se não for o personagem ativo, esconde a mira e não processa input
+	# TESTE 1: Verificar se a Layla está ativa
 	if not is_active:
+		# Se o console encher dessa mensagem, o problema é na troca de personagem!
+		# print("Layla inativa") 
 		aim_line.visible = false
 		super(delta)
 		return
 
-	# --- LÓGICA DA SKILL 1 (SEGURAR) ---
-	if Input.is_action_pressed("skill_1"): # Botão Direito ou Q
+	# TESTE 2: Verificar se o botão está sendo detectado
+	if Input.is_action_pressed("skill1"):
+		print("SEGURANDO BOTÃO! Carga: ", tempo_carregando) # <--- OLHE O CONSOLE
 		preparar_flecha(delta)
+		
 	
-	elif Input.is_action_just_released("skill_1"):
+	elif Input.is_action_just_released("skill1"):
+		print("SOLTOU O BOTÃO! Tntando atirar...") # <--- OLHE O CONSOLE
 		disparar()
 	
 	else:
-		# Se não está apertando nada, reseta o estado
 		carregando_tiro = false
 		aim_line.visible = false
 		tempo_carregando = 0.0
 	
-	# Chama a física da mãe (movimento, dash, regeneração)
 	super(delta)
 
 # --- FUNÇÃO DE MIRA ---
@@ -56,7 +55,7 @@ func preparar_flecha(delta):
 	tempo_carregando = min(tempo_carregando + delta, tempo_maximo_carga)
 	
 	# 2. Penalidade de Movimento (Layla anda 60% mais devagar mirando)
-	velocity *= 0.4 
+	#stats["speed"] *= 0.4 
 	
 	# 3. Desenha a linha de mira
 	var mouse_local = get_local_mouse_position()
@@ -86,7 +85,7 @@ func disparar():
 	# Vamos dizer que precisa carregar pelo menos 30% para ser considerado "Forte"
 	var porcentagem_carga = tempo_carregando / tempo_maximo_carga
 	
-	if porcentagem_carga < 0.3:
+	if porcentagem_carga < 0.5:
 		# --- TIRO RÁPIDO (POKE) ---
 		var dano = int(stats["atk"] * 0.8 + 20) # 80% do ATK
 		var dados = {"damage": dano}
@@ -105,7 +104,7 @@ func disparar():
 			var chance_bonus = 0.5
 			if randf() < (base_crit_chance + chance_bonus):
 				dano = int(dano * base_crit_damage)
-				flecha.modulate = Color(1.5, 1.5, 0, 1) # Brilha amarelo
+				flecha.modulate = Color(0.405, 4.823, 5.706, 1.0) # Brilha amarelo
 		
 		var dados = {"damage": dano}
 		
@@ -118,3 +117,7 @@ func disparar():
 	aim_line.visible = false
 	carregando_tiro = false
 	tempo_carregando = 0.0
+	
+
+	
+	

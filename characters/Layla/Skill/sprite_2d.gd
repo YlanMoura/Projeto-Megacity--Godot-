@@ -1,6 +1,6 @@
 extends Area2D
 
-var velocidade = 700.0
+var velocidade = 900.0
 var direcao = Vector2.RIGHT
 var dados_dano = {} 
 var shooter = null  
@@ -26,7 +26,6 @@ func _physics_process(delta):
 	position += direcao * velocidade * delta
 
 func _on_body_entered(body):
-	print("A Flecha bateu em algo: ", body.name)
 	if body == shooter: return
 	
 	if body.has_method("take_damage"):

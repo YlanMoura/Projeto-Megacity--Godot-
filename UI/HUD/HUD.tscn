@@ -1,0 +1,79 @@
+[gd_scene load_steps=4 format=3 uid="uid://bti5j0rw8cja4"]
+
+[ext_resource type="Script" uid="uid://bidxqxu1e6ewx" path="res://UI/HUD/hud.gd" id="1_0ktxb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ktxb"]
+bg_color = Color(0.6, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53dev"]
+bg_color = Color(0, 0.40600002, 0.87, 1)
+
+[node name="Hud" type="CanvasLayer"]
+script = ExtResource("1_0ktxb")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -220.0
+offset_right = 356.0
+grow_vertical = 0
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/margin_right = 20
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label_ATK" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label_PH" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label_CritChance" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label_CritDmg" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
+
+[node name="Label_HP_Texto" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_0ktxb")
+
+[node name="Label_Valor_Vida" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/ProgressBar"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "HP"
+
+[node name="Label_Shield" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ProgressBar2" type="ProgressBar" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_53dev")
+
+[node name="Label_Valor_Shield" type="Label" parent="MarginContainer/PanelContainer/HBoxContainer/VBoxContainer/ProgressBar2"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "SH"

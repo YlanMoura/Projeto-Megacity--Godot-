@@ -8,27 +8,28 @@ extends Node2D
 @onready var balpo = $Balpo
 @onready var layla = $Layla
 
+# --- NOVO: Referência ao seu HUD ---
+@onready var hud = $Hud # Verifique se o nome na árvore de nós é exatamente "Hud"
+
 # Lista com TODOS os personagens
-@onready var personagens = [skye, inferno, luka, auro, balpo, layla] 
+@onready var personagens = [layla, skye, inferno, luka, auro, balpo] 
 
 # Índice do personagem atual
 var indice_atual = 0 
 
 func _ready():
-	# Começa ativando só o primeiro da lista e avisando os inimigos
+	# Começa ativando só o primeiro da lista
 	atualizar_foco()
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	# Botão de troca (TAB)
 	if Input.is_action_just_pressed("ui_focus_next"):
 		trocar_personagem()
 
 func trocar_personagem():
 	indice_atual += 1
-	
 	if indice_atual >= personagens.size():
 		indice_atual = 0
-		
 	atualizar_foco()
 
 func atualizar_foco():
@@ -38,17 +39,16 @@ func atualizar_foco():
 	for i in range(personagens.size()):
 		if i == indice_atual:
 			personagens[i].set_active(true)
-			novo_alvo = personagens[i] # Guardamos quem é o ativo
+			novo_alvo = personagens[i]
 		else:
 			personagens[i].set_active(false)
 	
-	# 2. AVISA O EXÉRCITO INIMIGO (A novidade está aqui!)
-	# Pega todos os inimigos que já nasceram (do Spawner ou colocados na mão)
-	# IMPORTANTE: Use o nome do grupo que você colocou no script do Inimigo ("enemies" ou "inimigos")
-	var inimigos_vivos = get_tree().get_nodes_in_group("enemies") 
+	# 2. AVISA O HUD (Conecta a interface ao novo personagem)
+	if hud and novo_alvo:
+		hud.conectar_no_player(novo_alvo)
 	
+	# 3. AVISA O EXÉRCITO INIMIGO
+	var inimigos_vivos = get_tree().get_nodes_in_group("enemies") 
 	for inimigo in inimigos_vivos:
-		# Se o inimigo ainda existe e tem a variável target
 		if is_instance_valid(inimigo) and "target" in inimigo:
 			inimigo.target = novo_alvo
-			# print("Inimigo mudou o alvo para: ", novo_alvo.name)
