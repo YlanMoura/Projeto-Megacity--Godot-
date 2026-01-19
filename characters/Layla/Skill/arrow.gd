@@ -1,6 +1,6 @@
 extends Area2D
 
-var velocidade = 900.0
+var velocidade = 700.0
 var direcao = Vector2.RIGHT
 var dados_dano = {} 
 var shooter = null  

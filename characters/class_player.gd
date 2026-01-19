@@ -1,6 +1,10 @@
 class_name ClassPlayer extends CharacterBody2D
 
 # --- STATUS GERAIS ---
+@export_group("Identidade")
+@export var nome_personagem: String = "Personagem"
+@export var retrato: Texture2D # Arraste a foto aqui no Inspetor
+
 @export_group("Status")
 @export var max_health: int = 100
 var current_health: int
@@ -9,6 +13,9 @@ var current_health: int
 # Define se o jogador está controlando este boneco agora
 var is_active: bool = false 
 @onready var camera = $Camera2D # Certifique-se que o Player tem uma Camera2D ou trate o erro
+
+# Referência para o HUD Global
+var hud_global = null
 
 # --- ESCUDO (SHIELD) ---
 @export_group("Escudo")
@@ -44,7 +51,6 @@ var is_dashing: bool = false
 var can_use_skill_1: bool = true
 
 # --- SISTEMA INTERNO ---
-var vida_label: Label 
 var stats = {}
 var buff_timers = {}
 const FLOATING_NUMBER_SCENE = preload("res://UI/floating_number.tscn")
@@ -59,16 +65,17 @@ func _ready():
 	set_collision_mask_value(4, true)
 	set_collision_mask_value(3, true)
 	
-	vida_label = Label.new()
-	add_child(vida_label)
-	vida_label.position = Vector2(-20, -70)
-	actualizar_ui_vida()
+	# --- CONEXÃO COM HUD ---
+	# Procura o HUD na cena principal (assumindo que o nome do nó é "Hud" ou "HUD")
+	hud_global = get_tree().current_scene.find_child("HUD", true, false)
+	if not hud_global:
+		hud_global = get_tree().current_scene.find_child("Hud", true, false)
 	
 	# Monta o dicionário. AQUI É A CHAVE DE TUDO.
 	stats = {
 		"max_hp": max_health,
 		"max_shield": max_shield,
-		"speed": speed,        # <--- O jogo vai ler DAQUI, não da variável lá em cima
+		"speed": speed,        # <--- O jogo vai ler DAQUI
 		
 		"dash_speed": dash_speed,
 		"dash_duration": dash_duration,
@@ -81,10 +88,14 @@ func _ready():
 		"crit_damage": base_crit_damage,
 		"skill_1_cooldown": skill_1_cooldown
 	}
+	
+	# Se já nascer ativo, conecta
+	if is_active:
+		set_active(true)
 
 # --- MOVIMENTAÇÃO CENTRALIZADA (A Mágica Acontece Aqui) ---
 func _physics_process(delta: float) -> void:
-	# Lógica do Escudo (Mantida do seu código original)
+	# Lógica do Escudo
 	_processar_escudo(delta)
 	
 	# Se não estiver ativo, não anda
@@ -94,15 +105,21 @@ func _physics_process(delta: float) -> void:
 	var direction = Input.get_vector("esquerda", "direita", "cima", "baixo")
 
 	# 1. Gatilho do Dash
-	# Lê "dash_cooldown" do stats, caso queira buffar cooldown no futuro
 	if Input.is_action_just_pressed("dash") and current_dashes > 0 and direction != Vector2.ZERO:
 		start_dash(direction)
 	
 	# 2. Movimentação Normal
 	if not is_dashing:
 		if direction:
-			# LÊ DO STATS! Se stats["speed"] for 600 (por causa do buff), ele corre!
 			velocity = direction * stats["speed"]
+			
+			# --- NOVA LÓGICA DE VIRAR O SPRITE ---
+			# Como está no PAI, todos os filhos herdam isso!
+			if velocity.x > 0:
+				transform.x.x = 1 # Olha p/ direita
+			elif velocity.x < 0:
+				transform.x.x = -1 # Olha p/ esquerda
+				
 		else:
 			velocity = velocity.move_toward(Vector2.ZERO, stats["speed"])
 	
@@ -119,11 +136,11 @@ func _processar_escudo(delta):
 			regen_accumulator -= amount 
 			current_shield += amount
 			if current_shield > max_shield: current_shield = max_shield
+			# Não precisamos chamar ui update aqui toda hora se o HUD já faz no _process
+			# Mas mantemos caso queira forçar
 			actualizar_ui_vida()
-			# mostrar_texto_flutuante(amount, "escudo") # Opcional: Poluição visual
 
 func _unhandled_input(event: InputEvent) -> void:
-	# Só usa skill se estiver ativo
 	if not is_active: return
 	
 	if event.is_action_pressed("skill1") and can_use_skill_1:
@@ -135,14 +152,12 @@ func start_dash(dir: Vector2):
 	current_dashes -= 1
 	is_dashing = true
 	
-	# Usa stats aqui também (pode ter buff de velocidade de dash!)
 	velocity = dir * stats["dash_speed"]
 	
 	recharge_one_dash() 
 	
 	await get_tree().create_timer(stats["dash_duration"]).timeout
 	is_dashing = false
-	# No próximo frame do physics_process, a velocidade volta ao normal sozinha
 
 func recharge_one_dash():
 	await get_tree().create_timer(stats["dash_cooldown"]).timeout
@@ -152,9 +167,16 @@ func recharge_one_dash():
 # --- FUNÇÕES DE CONTROLE ---
 func set_active(state: bool):
 	is_active = state
+	
+	# Controle da Câmera
 	if has_node("Camera2D"):
 		$Camera2D.enabled = state
 		if state: $Camera2D.make_current()
+		
+	# Controle do HUD
+	if state and hud_global:
+		if hud_global.has_method("conectar_no_player"):
+			hud_global.conectar_no_player(self)
 
 # --- COMBATE E DANO ---
 
@@ -197,11 +219,10 @@ func heal(amount: int):
 
 # --- UI E EFEITOS ---
 func actualizar_ui_vida():
-	if vida_label:
-		vida_label.text = "HP: %d | SH: %d" % [current_health, current_shield]
-		if current_health < max_health * 0.25: vida_label.modulate = Color.RED
-		elif current_shield <= 0: vida_label.modulate = Color.YELLOW
-		else: vida_label.modulate = Color.WHITE
+	# Agora apenas manda um sinal para o HUD Global, se necessário
+	# Nota: Como seu HUD novo usa _process, isso aqui é mais para garantir atualização instantânea em eventos
+	if is_active and hud_global and hud_global.has_method("atualizar_todos_os_status"):
+		hud_global.atualizar_todos_os_status()
 
 func mostrar_texto_flutuante(valor: int, tipo: String):
 	if FLOATING_NUMBER_SCENE and valor > 0:
@@ -210,7 +231,7 @@ func mostrar_texto_flutuante(valor: int, tipo: String):
 		texto.global_position = global_position + Vector2.UP * 40
 		texto.setup(valor, tipo)
 
-# --- SISTEMA DE BUFFS (CORRIGIDO) ---
+# --- SISTEMA DE BUFFS ---
 func aplicar_buff_temporario(stat_name: String, porcentagem: float, duracao: float):
 	if not stats.has(stat_name): return
 	
@@ -219,12 +240,8 @@ func aplicar_buff_temporario(stat_name: String, porcentagem: float, duracao: flo
 		return
 
 	var valor_original = stats[stat_name]
-	
-	# REMOVI O int() AQUI PARA NÃO QUEBRAR O SPEED
 	var bonus = valor_original * porcentagem
 	
-	# Se o status original for inteiro (HP, ATK), arredonda o bônus.
-	# Se for float (Speed, Crit), mantém float.
 	if typeof(valor_original) == TYPE_INT:
 		bonus = int(bonus)
 	
