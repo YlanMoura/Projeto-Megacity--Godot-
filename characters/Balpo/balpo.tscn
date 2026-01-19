@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cb327j63spjo8"]
+[gd_scene load_steps=5 format=3 uid="uid://cb327j63spjo8"]
 
 [ext_resource type="Script" uid="uid://da7kdc1ahr2jw" path="res://characters/Balpo/balpo.gd" id="1_se3bu"]
 [ext_resource type="Texture2D" uid="uid://c8e630uaexl11" path="res://characters/Balpo/sprites/sprite balpo.png" id="2_k0uvi"]
+[ext_resource type="PackedScene" uid="uid://cj7687n13v1or" path="res://characters/Balpo/skills/AreaPisao.tscn" id="2_lh4k0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_se3bu"]
 size = Vector2(91, 159.75)
@@ -9,8 +10,7 @@ size = Vector2(91, 159.75)
 [node name="Balpo" type="CharacterBody2D"]
 position = Vector2(0, -1)
 script = ExtResource("1_se3bu")
-max_health = 180
-max_shield = 150
+pisao_scene = ExtResource("2_lh4k0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(25.5, -57.125)

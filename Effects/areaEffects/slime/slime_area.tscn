@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bi44h5742rbmr" path="res://Effects/areaEffects/slime/slime_area.gd" id="1_j7cp2"]
 
 [node name="SlimeArea" type="Area2D"]
+collision_mask = 7
 script = ExtResource("1_j7cp2")
 damage_amount = 35
 duration = 0.0

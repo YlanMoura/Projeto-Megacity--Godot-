@@ -3,8 +3,6 @@ extends Node2D
 @onready var tile_map = $TileMap
 @onready var inferno = $Inferno
 @onready var skye = $Skye
-@onready var luka = $Luka 
-@onready var auro = $Auro
 @onready var balpo = $Balpo
 @onready var layla = $Layla
 
@@ -12,7 +10,7 @@ extends Node2D
 @onready var hud = $Hud # Verifique se o nome na árvore de nós é exatamente "Hud"
 
 # Lista com TODOS os personagens
-@onready var personagens = [layla, skye, inferno, luka, auro, balpo] 
+@onready var personagens = [layla, skye, inferno, balpo] 
 
 # Índice do personagem atual
 var indice_atual = 0 

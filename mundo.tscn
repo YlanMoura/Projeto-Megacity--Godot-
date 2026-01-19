@@ -1,12 +1,10 @@
-[gd_scene load_steps=16 format=3 uid="uid://c28vro5ybqqvt"]
+[gd_scene load_steps=14 format=3 uid="uid://c28vro5ybqqvt"]
 
 [ext_resource type="Texture2D" uid="uid://4u66n3owft75" path="res://icon.svg" id="1_lgngo"]
 [ext_resource type="Script" uid="uid://blmw8asaqnfvs" path="res://mundo.gd" id="1_otwa2"]
 [ext_resource type="PackedScene" uid="uid://sa5vagwuf0so" path="res://characters/Inferno/inferno.tscn" id="3_t8jxu"]
-[ext_resource type="PackedScene" uid="uid://euvhmmj7288o" path="res://characters/Luka/luka.tscn" id="4_t8jxu"]
 [ext_resource type="PackedScene" uid="uid://dvjyh2gqqlyb5" path="res://characters/skye/skye.tscn" id="5_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://inimigos/inimigo.tscn" id="7_2hh7m"]
-[ext_resource type="PackedScene" uid="uid://cjj76jueu02nd" path="res://characters/Auro/auro.tscn" id="7_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://Effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
 [ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://Effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://bkj6pr5rjm8mf" path="res://inimigos/spawner/Spawner.tscn" id="10_pij3u"]
@@ -383,12 +381,6 @@ position = Vector2(80, 579)
 raio_visual = 260.0
 duration = 0.0
 
-[node name="Auro" parent="." instance=ExtResource("7_pfhxm")]
-position = Vector2(-39, 30)
-
-[node name="Luka" parent="." instance=ExtResource("4_t8jxu")]
-position = Vector2(-233, 21)
-
 [node name="Skye" parent="." instance=ExtResource("5_pfhxm")]
 position = Vector2(-95, -78)
 
@@ -404,9 +396,10 @@ enemy_scene = ExtResource("7_2hh7m")
 position = Vector2(552, 451)
 
 [node name="Balpo" parent="." instance=ExtResource("11_0oi55")]
-position = Vector2(-335, -62)
+position = Vector2(466, -216)
+skill_1_cooldown = 0.5
 
 [node name="Layla" parent="." instance=ExtResource("12_57gmc")]
-position = Vector2(-388, 25)
+position = Vector2(-330, 191)
 
 [node name="Hud" parent="." instance=ExtResource("13_0crsg")]
