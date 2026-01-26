@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmt7l1coa5cnh"]
+
+[ext_resource type="Script" uid="uid://o1eosrcxdott" path="res://characters/Asta/asta.gd" id="1_qen5b"]
+[ext_resource type="Texture2D" uid="uid://b6gu1mkrfdi56" path="res://characters/Asta/Sprites/sprites.png" id="2_cpyxb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vy8fm"]
+size = Vector2(50, 115)
+
+[node name="Asta" type="CharacterBody2D"]
+script = ExtResource("1_qen5b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 14)
+shape = SubResource("RectangleShape2D_vy8fm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-12.999998, 7.9999924)
+scale = Vector2(2.0859373, 2.0859373)
+texture = ExtResource("2_cpyxb")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
