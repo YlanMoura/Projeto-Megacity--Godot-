@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c28vro5ybqqvt"]
+[gd_scene load_steps=15 format=3 uid="uid://c28vro5ybqqvt"]
 
 [ext_resource type="Texture2D" uid="uid://4u66n3owft75" path="res://icon.svg" id="1_lgngo"]
 [ext_resource type="Script" uid="uid://blmw8asaqnfvs" path="res://mundo.gd" id="1_otwa2"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://Effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://bkj6pr5rjm8mf" path="res://inimigos/spawner/Spawner.tscn" id="10_pij3u"]
 [ext_resource type="PackedScene" uid="uid://cb327j63spjo8" path="res://characters/Balpo/balpo.tscn" id="11_0oi55"]
+[ext_resource type="PackedScene" uid="uid://cmt7l1coa5cnh" path="res://characters/Asta/Asta.tscn" id="12_0crsg"]
 [ext_resource type="PackedScene" uid="uid://bt3d2wke6f44q" path="res://characters/Layla/Layla.tscn" id="12_57gmc"]
 [ext_resource type="PackedScene" uid="uid://bti5j0rw8cja4" path="res://UI/HUD/HUD.tscn" id="13_0crsg"]
 
@@ -403,3 +404,9 @@ skill_1_cooldown = 0.5
 position = Vector2(-330, 191)
 
 [node name="Hud" parent="." instance=ExtResource("13_0crsg")]
+
+[node name="Asta" parent="." instance=ExtResource("12_0crsg")]
+position = Vector2(107, 146)
+max_health = 60
+max_shield = 120
+speed = 420.0
