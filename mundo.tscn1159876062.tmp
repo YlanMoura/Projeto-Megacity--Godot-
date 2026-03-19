@@ -5,9 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://sa5vagwuf0so" path="res://characters/inferno.tscn" id="3_t8jxu"]
 [ext_resource type="PackedScene" uid="uid://euvhmmj7288o" path="res://characters/Luka/luka.tscn" id="4_t8jxu"]
 [ext_resource type="PackedScene" uid="uid://dvjyh2gqqlyb5" path="res://characters/skye/skye.tscn" id="5_pfhxm"]
-[ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://inimigos/inimigo.tscn" id="7_2hh7m"]
-[ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://Effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
-[ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://Effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
+[ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://enemies/inimigo.tscn" id="7_2hh7m"]
+[ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
+[ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lgngo"]
 texture = ExtResource("1_lgngo")
@@ -388,3 +388,4 @@ raio_visual = 100.0
 
 [node name="FrozenArea" parent="." instance=ExtResource("9_pfhxm")]
 position = Vector2(2, 605)
+

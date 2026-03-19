@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://c3ivch2rsxdp1"]
+
+[ext_resource type="Script" uid="uid://bqumwdpy13vsv" path="res://characters/Vixy/vixy.gd" id="1_vixy"]
+[ext_resource type="Texture2D" uid="uid://dqpd51yhdrcfe" path="res://characters/Vixy/sprites/VIXY1.png" id="2_ig5w2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vixy"]
+size = Vector2(58, 128)
+
+[node name="Vixy" type="CharacterBody2D" unique_id=673104787]
+script = ExtResource("1_vixy")
+nome_personagem = "Vixy"
+max_health = 90
+max_shield = 60
+speed = 430.0
+dash_speed = 1250.0
+dash_duration = 0.22
+base_atk = 24
+base_ph = 55
+skill_1_cooldown = 4.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=385702754]
+position = Vector2(-7, 14)
+shape = SubResource("RectangleShape2D_vixy")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=2040696630]
+position_smoothing_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2070889951]
+texture_filter = 1
+position = Vector2(-12.999998, 15.999992)
+scale = Vector2(2.0859373, 2.0859373)
+texture = ExtResource("2_ig5w2")

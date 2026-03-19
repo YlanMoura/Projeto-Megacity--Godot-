@@ -53,7 +53,9 @@ var can_use_skill_1: bool = true
 # --- SISTEMA INTERNO ---
 var stats = {}
 var buff_timers = {}
-const FLOATING_NUMBER_SCENE = preload("res://UI/floating_number.tscn")
+var buff_versions = {}
+var buff_values = {}
+const FLOATING_NUMBER_SCENE = preload("res://ui/floating_number.tscn")
 
 func _ready():
 	add_to_group("players")
@@ -138,7 +140,7 @@ func _processar_escudo(delta):
 			if current_shield > max_shield: current_shield = max_shield
 			# Não precisamos chamar ui update aqui toda hora se o HUD já faz no _process
 			# Mas mantemos caso queira forçar
-			actualizar_ui_vida()
+			atualizar_ui_vida()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_active: return
@@ -194,7 +196,7 @@ func take_damage(amount: int):
 		current_health -= amount
 		mostrar_texto_flutuante(amount, "dano")
 	
-	actualizar_ui_vida()
+	atualizar_ui_vida()
 	if current_health <= 0: die()
 
 func calculate_damage(base_dmg: float, scaling_stat: String) -> Dictionary:
@@ -214,15 +216,18 @@ func calculate_damage(base_dmg: float, scaling_stat: String) -> Dictionary:
 func heal(amount: int):
 	current_health += amount
 	if current_health > max_health: current_health = max_health
-	actualizar_ui_vida()
+	atualizar_ui_vida()
 	mostrar_texto_flutuante(amount, "cura")
 
 # --- UI E EFEITOS ---
-func actualizar_ui_vida():
+func atualizar_ui_vida():
 	# Agora apenas manda um sinal para o HUD Global, se necessário
 	# Nota: Como seu HUD novo usa _process, isso aqui é mais para garantir atualização instantânea em eventos
 	if is_active and hud_global and hud_global.has_method("atualizar_todos_os_status"):
 		hud_global.atualizar_todos_os_status()
+
+func actualizar_ui_vida():
+	atualizar_ui_vida()
 
 func mostrar_texto_flutuante(valor: int, tipo: String):
 	if FLOATING_NUMBER_SCENE and valor > 0:
@@ -236,7 +241,16 @@ func aplicar_buff_temporario(stat_name: String, porcentagem: float, duracao: flo
 	if not stats.has(stat_name): return
 	
 	if buff_timers.has(stat_name):
-		buff_timers[stat_name].time_left = duracao
+		buff_versions[stat_name] += 1
+		var renewed_version = buff_versions[stat_name]
+		var renewed_timer = get_tree().create_timer(duracao)
+		buff_timers[stat_name] = renewed_timer
+		await renewed_timer.timeout
+		if buff_versions.get(stat_name, -1) == renewed_version:
+			stats[stat_name] -= buff_values.get(stat_name, 0)
+			buff_timers.erase(stat_name)
+			buff_versions.erase(stat_name)
+			buff_values.erase(stat_name)
 		return
 
 	var valor_original = stats[stat_name]
@@ -249,11 +263,16 @@ func aplicar_buff_temporario(stat_name: String, porcentagem: float, duracao: flo
 	
 	var timer = get_tree().create_timer(duracao)
 	buff_timers[stat_name] = timer
+	buff_versions[stat_name] = 0
+	buff_values[stat_name] = bonus
 	
 	await timer.timeout
 	
-	stats[stat_name] -= bonus
-	buff_timers.erase(stat_name)
+	if buff_versions.get(stat_name, -1) == 0:
+		stats[stat_name] -= bonus
+		buff_timers.erase(stat_name)
+		buff_versions.erase(stat_name)
+		buff_values.erase(stat_name)
 
 # --- ABSTRACTS ---
 func attempt_skill_1():

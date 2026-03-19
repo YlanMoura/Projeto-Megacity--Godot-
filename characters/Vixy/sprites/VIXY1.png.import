@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccykc6l82wa1q"
-path="res://.godot/imported/rastro.png-976038348300425f347ed5970f3bd8d2.ctex"
+uid="uid://dqpd51yhdrcfe"
+path="res://.godot/imported/VIXY1.png-ff6e7ce1cf572e1245f382efefcbde93.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/Layla/Skill/sprites/rastro.png"
-dest_files=["res://.godot/imported/rastro.png-976038348300425f347ed5970f3bd8d2.ctex"]
+source_file="res://characters/Vixy/sprites/VIXY1.png"
+dest_files=["res://.godot/imported/VIXY1.png-ff6e7ce1cf572e1245f382efefcbde93.ctex"]
 
 [params]
 

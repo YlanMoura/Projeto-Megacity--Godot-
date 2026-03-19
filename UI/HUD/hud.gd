@@ -33,9 +33,16 @@ func conectar_no_player(novo_player: ClassPlayer):
 	# Atualiza os máximos das barras (HP Max muda pouco, mas se tiver item de vida, ajuda)
 	bar_hp.max_value = novo_player.stats["max_hp"]
 	bar_shield.max_value = novo_player.stats["max_shield"]
+	atualizar_todos_os_status()
+
+func atualizar_todos_os_status():
+	if is_instance_valid(player_focado):
+		_atualizar_interface_completa()
 
 func _atualizar_interface_completa():
 	var stats = player_focado.stats
+	bar_hp.max_value = stats["max_hp"]
+	bar_shield.max_value = stats["max_shield"]
 	
 	
 	label_atk.text = "⚔️ ATK: " + str(stats["atk"])
@@ -60,3 +67,4 @@ func _atualizar_interface_completa():
 		bar_shield.modulate = Color(1, 1, 1, 0.3)
 	else:
 		bar_shield.modulate = Color(1, 1, 1, 1)
+

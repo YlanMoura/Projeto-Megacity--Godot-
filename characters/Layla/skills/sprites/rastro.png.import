@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mxe1dydw1unc"
-path="res://.godot/imported/04.png-175930dee01c3b62a81d14c53e490e16.ctex"
+uid="uid://ccykc6l82wa1q"
+path="res://.godot/imported/rastro.png-23f9b9a0fee2cdb2ec524ca955f5db60.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ui/sprites/04.png"
-dest_files=["res://.godot/imported/04.png-175930dee01c3b62a81d14c53e490e16.ctex"]
+source_file="res://characters/Layla/skills/sprites/rastro.png"
+dest_files=["res://.godot/imported/rastro.png-23f9b9a0fee2cdb2ec524ca955f5db60.ctex"]
 
 [params]
 

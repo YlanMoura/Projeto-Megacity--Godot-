@@ -1,4 +1,4 @@
-class_name classEnemy extends CharacterBody2D
+class_name Enemy extends CharacterBody2D
 
 #---------- status----------
 @export_group("Stats")
@@ -14,15 +14,16 @@ class_name classEnemy extends CharacterBody2D
 var current_health = 0
 var target = null 
 var stats = {} 
-const FLOATING_NUMBER_SCENE = preload("res://UI/floating_number.tscn")
-const ALMA_SCENE = preload("res://characters/Inferno/skills/alma/alma.tscn")
+const FLOATING_NUMBER_SCENE = preload("res://ui/floating_number.tscn")
+const ALMA_SCENE = preload("res://characters/Inferno/skills/soul/alma.tscn")
 
 # --- NOVAS VARIÁVEIS DE CONTROLE DE GRUPO (CC) ---
 var is_stunned: bool = false
 var is_knocked_up: bool = false
 
 func _ready():
-	add_to_group("enemies") 
+	add_to_group("enemies")
+	add_to_group("inimigos")
 	current_health = max_health
 	
 	# Monta o dicionário
@@ -123,3 +124,4 @@ func spawnar_alma():
 		alma.global_position = global_position
 		alma.setup(target)
 		get_tree().current_scene.add_child(alma)
+

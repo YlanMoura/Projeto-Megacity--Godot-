@@ -38,15 +38,15 @@ func on_impact(body):
 
 # [RECUPERADO] Função que dá dano em todo mundo ao redor na hora do impacto
 func explodir_area():
-	var inimigos = get_tree().get_nodes_in_group("inimigos")
+	var enemies = get_tree().get_nodes_in_group("enemies")
 	
-	for inimigo in inimigos:
-		var distancia = global_position.distance_to(inimigo.global_position)
+	for enemy in enemies:
+		var distancia = global_position.distance_to(enemy.global_position)
 		
 		if distancia <= raio_explosao:
-			if inimigo.has_method("take_damage"):
+			if enemy.has_method("take_damage"):
 				# Usa o dano que veio no pacote do Inferno (damage_info["value"])
-				inimigo.take_damage(damage_info["value"])
+				enemy.take_damage(damage_info["value"])
 
 func criar_zona_dinamica():
 	if CENA_ZONA:
@@ -66,3 +66,4 @@ func criar_zona_dinamica():
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
+

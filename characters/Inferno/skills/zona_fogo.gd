@@ -23,7 +23,9 @@ func setup(pacote_de_dano: Dictionary, criador: Node2D): # <--- NOVO 2: Recebe o
 	caster = criador # Guarda o Inferno na memória
 	
 	# Mantém a leitura do pacote como "valor base/inicial"
-	if pacote_de_dano.has("final_damage"):
+	if pacote_de_dano.has("dano_zona_valor"):
+		dano_por_tick = pacote_de_dano["dano_zona_valor"]
+	elif pacote_de_dano.has("final_damage"):
 		dano_por_tick = pacote_de_dano["final_damage"]
 	
 	if pacote_de_dano.has("cura_valor"):
@@ -66,7 +68,7 @@ func _on_tick_timer_timeout():
 	
 	for corpo in corpos:
 		# 1. INIMIGOS
-		if corpo.is_in_group("inimigos"):
+		if corpo.is_in_group("enemies"):
 			if corpo.has_method("take_damage"):
 				corpo.take_damage(dano_atual) # <--- Usa a variável atualizada
 		

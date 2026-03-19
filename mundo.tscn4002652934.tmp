@@ -5,10 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://sa5vagwuf0so" path="res://characters/Inferno/inferno.tscn" id="3_t8jxu"]
 [ext_resource type="PackedScene" uid="uid://euvhmmj7288o" path="res://characters/Luka/luka.tscn" id="4_t8jxu"]
 [ext_resource type="PackedScene" uid="uid://dvjyh2gqqlyb5" path="res://characters/skye/skye.tscn" id="5_pfhxm"]
-[ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://inimigos/inimigo.tscn" id="7_2hh7m"]
+[ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://enemies/inimigo.tscn" id="7_2hh7m"]
 [ext_resource type="PackedScene" uid="uid://cjj76jueu02nd" path="res://characters/Auro/auro.tscn" id="7_pfhxm"]
-[ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://Effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
-[ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://Effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
+[ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
+[ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lgngo"]
 texture = ExtResource("1_lgngo")
@@ -389,3 +389,4 @@ position = Vector2(-95, -78)
 [node name="Inferno" parent="." instance=ExtResource("3_t8jxu")]
 position = Vector2(-528, -28)
 dash_speed = 1200.0
+

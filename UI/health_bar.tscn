@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bo323ss663vm"]
 
-[ext_resource type="Texture2D" uid="uid://dijaugfollsfp" path="res://UI/sprites/04.png" id="1_6f3ms"]
-[ext_resource type="Script" uid="uid://b5tck816b1erd" path="res://UI/health_bar.gd" id="2_0yf5l"]
+[ext_resource type="Texture2D" uid="uid://dijaugfollsfp" path="res://ui/sprites/04.png" id="1_6f3ms"]
+[ext_resource type="Script" uid="uid://b5tck816b1erd" path="res://ui/health_bar.gd" id="2_0yf5l"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0yf5l"]
 atlas = ExtResource("1_6f3ms")
@@ -16,3 +16,4 @@ texture_under = SubResource("AtlasTexture_0yf5l")
 texture_over = SubResource("AtlasTexture_tqipt")
 texture_progress = SubResource("AtlasTexture_tqipt")
 script = ExtResource("2_0yf5l")
+
