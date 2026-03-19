@@ -44,7 +44,7 @@ func _physics_process(_delta):
 	if not is_active or player == null: 
 		return
 	
-	if Input.is_action_pressed("atirar"):
+	if Input.is_action_pressed("ataque"):
 		tentar_atirar()
 
 func tentar_atirar():
@@ -91,3 +91,4 @@ func drop():
 	
 	print(nome_arma, " foi dropada!")
 	
+

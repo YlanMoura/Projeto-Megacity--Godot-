@@ -5,14 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://sa5vagwuf0so" path="res://characters/Inferno/inferno.tscn" id="3_t8jxu"]
 [ext_resource type="PackedScene" uid="uid://euvhmmj7288o" path="res://characters/Luka/luka.tscn" id="4_t8jxu"]
 [ext_resource type="PackedScene" uid="uid://dvjyh2gqqlyb5" path="res://characters/skye/skye.tscn" id="5_pfhxm"]
-[ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://inimigos/inimigo.tscn" id="7_2hh7m"]
+[ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://enemies/inimigo.tscn" id="7_2hh7m"]
 [ext_resource type="PackedScene" uid="uid://cjj76jueu02nd" path="res://characters/Auro/auro.tscn" id="7_pfhxm"]
-[ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://Effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
-[ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://Effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
-[ext_resource type="PackedScene" uid="uid://bkj6pr5rjm8mf" path="res://inimigos/spawner/Spawner.tscn" id="10_pij3u"]
+[ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
+[ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
+[ext_resource type="PackedScene" uid="uid://bkj6pr5rjm8mf" path="res://enemies/spawner/Spawner.tscn" id="10_pij3u"]
 [ext_resource type="PackedScene" uid="uid://cb327j63spjo8" path="res://characters/Balpo/balpo.tscn" id="11_0oi55"]
 [ext_resource type="PackedScene" uid="uid://bt3d2wke6f44q" path="res://characters/Layla/Layla.tscn" id="12_57gmc"]
-[ext_resource type="PackedScene" uid="uid://bti5j0rw8cja4" path="res://UI/HUD/HUD.tscn" id="13_0crsg"]
+[ext_resource type="PackedScene" uid="uid://bti5j0rw8cja4" path="res://ui/HUD/HUD.tscn" id="13_0crsg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lgngo"]
 texture = ExtResource("1_lgngo")
@@ -410,3 +410,4 @@ position = Vector2(-335, -62)
 position = Vector2(-388, 25)
 
 [node name="Hud" parent="." instance=ExtResource("13_0crsg")]
+

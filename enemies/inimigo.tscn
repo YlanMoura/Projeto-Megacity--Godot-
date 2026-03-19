@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cmr2h733llaik"]
+
+[ext_resource type="Script" uid="uid://sn8t83pli5c" path="res://enemies/inimigo.gd" id="1_030df"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1su0k"]
+size = Vector2(40, 40)
+
+[node name="Enemy" type="CharacterBody2D" unique_id=84812128 groups=["enemies"]]
+collision_layer = 4
+collision_mask = 15
+script = ExtResource("1_030df")
+max_health = 300
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2142006097]
+offset_left = -19.0
+offset_top = -21.0
+offset_right = 21.0
+offset_bottom = 19.0
+color = Color(1, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1052151349]
+light_mask = 4
+visibility_layer = 4
+position = Vector2(1, -1)
+shape = SubResource("RectangleShape2D_1su0k")

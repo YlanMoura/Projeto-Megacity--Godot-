@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bnyv62vef6xc0"
-path="res://.godot/imported/ponta.png-4c43af575e741e3531db788c8ceddcd9.ctex"
+path="res://.godot/imported/ponta.png-cde7ae99298cea1e7025f3b6bc28da74.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://characters/Layla/Skill/sprites/ponta.png"
-dest_files=["res://.godot/imported/ponta.png-4c43af575e741e3531db788c8ceddcd9.ctex"]
+source_file="res://characters/Layla/skills/sprites/ponta.png"
+dest_files=["res://.godot/imported/ponta.png-cde7ae99298cea1e7025f3b6bc28da74.ctex"]
 
 [params]
 

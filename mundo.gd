@@ -6,12 +6,13 @@ extends Node2D
 @onready var balpo = $Balpo
 @onready var layla = $Layla
 @onready var asta = $Asta
+@onready var vixy = $Vixy
 
 # --- NOVO: Referência ao seu HUD ---
 @onready var hud = $Hud # Verifique se o nome na árvore de nós é exatamente "Hud"
 
 # Lista com TODOS os personagens
-@onready var personagens = [layla, skye, asta, inferno, balpo] 
+@onready var personagens = [layla, skye, asta, inferno, balpo, vixy] 
 
 # Índice do personagem atual
 var indice_atual = 0 
@@ -22,7 +23,7 @@ func _ready():
 
 func _physics_process(_delta):
 	# Botão de troca (TAB)
-	if Input.is_action_just_pressed("ui_focus_next"):
+	if Input.is_action_just_pressed("trocar_personagem"):
 		trocar_personagem()
 
 func trocar_personagem():
@@ -47,7 +48,7 @@ func atualizar_foco():
 		hud.conectar_no_player(novo_alvo)
 	
 	# 3. AVISA O EXÉRCITO INIMIGO
-	var inimigos_vivos = get_tree().get_nodes_in_group("enemies") 
-	for inimigo in inimigos_vivos:
-		if is_instance_valid(inimigo) and "target" in inimigo:
-			inimigo.target = novo_alvo
+	var active_enemies = get_tree().get_nodes_in_group("enemies")
+	for enemy in active_enemies:
+		if is_instance_valid(enemy) and "target" in enemy:
+			enemy.target = novo_alvo

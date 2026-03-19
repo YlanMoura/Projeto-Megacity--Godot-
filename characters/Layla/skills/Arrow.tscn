@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://bfyaavw6y2yh5"]
 
-[ext_resource type="Script" uid="uid://b3iltald88phe" path="res://characters/Layla/Skill/arrow.gd" id="1_gayus"]
-[ext_resource type="Texture2D" uid="uid://bnyv62vef6xc0" path="res://characters/Layla/Skill/sprites/ponta.png" id="2_8ygt5"]
-[ext_resource type="Texture2D" uid="uid://ccykc6l82wa1q" path="res://characters/Layla/Skill/sprites/rastro.png" id="3_bfrxx"]
-[ext_resource type="Script" uid="uid://d1j0lywfnxsjq" path="res://characters/Layla/Skill/rastro.gd" id="4_8ygt5"]
+[ext_resource type="Script" uid="uid://b3iltald88phe" path="res://characters/Layla/skills/arrow.gd" id="1_gayus"]
+[ext_resource type="Texture2D" uid="uid://bnyv62vef6xc0" path="res://characters/Layla/skills/sprites/ponta.png" id="2_8ygt5"]
+[ext_resource type="Texture2D" uid="uid://ccykc6l82wa1q" path="res://characters/Layla/skills/sprites/rastro.png" id="3_bfrxx"]
+[ext_resource type="Script" uid="uid://d1j0lywfnxsjq" path="res://characters/Layla/skills/rastro.gd" id="4_8ygt5"]
 
 [sub_resource type="Gradient" id="Gradient_8ygt5"]
 colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
@@ -34,3 +34,4 @@ position = Vector2(31, -7)
 shape = SubResource("RectangleShape2D_8ygt5")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+
