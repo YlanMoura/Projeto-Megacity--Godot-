@@ -1,83 +1,167 @@
 extends Node2D
 class_name ClassWeapon
-var player: ClassPlayer
 
-# --- Enums para Organizacao ---
-enum Raridade { COMUM, INCOMUM, RARO, EPICO, LENDARIO, UNICA }
-enum Elemento { FISICO, FOGO, CHOQUE, CORROSIVO, ETER, GELO }
+const PLAYER_PROJECTILE_SCENE = preload("res://weapons/projectiles/player_projectile.tscn")
 
-# --- NOME DA ARMA --- #
-@export var nome_arma: String = "Arma Base"
+@export_group("Identity")
+@export var nome_arma: String = "Prototype Weapon"
+@export var weapon_prop_scene: PackedScene
+@export var hold_offset: Vector2 = Vector2(24, -10)
+@export var weapon_tint: Color = Color(0.95, 0.95, 0.95, 1.0)
+@export var weapon_size: Vector2 = Vector2(26, 8)
 
-# --- ATRIBUTOS --- #
-@export_group("Stats da Arma")
-@export var raridade: Raridade = Raridade.COMUM
-@export var tipo_elemento: Elemento = Elemento.FISICO
-
+@export_group("Stats")
 @export var dano_base: float = 10.0
 @export var cadencia_tiro: float = 0.2
-@export var tamanho_pente: int = 20
-@export var velocidade_recarga: float = 2.0
-@export var chance_critico: float = 0.1
-@export var multiplicador_critico: float = 2.0
 @export var quantidade_pellets: int = 1
 @export var dispersao: float = 0.05
+@export var projectile_speed: float = 900.0
+@export var projectile_lifetime: float = 0.9
+@export var projectile_scale: float = 1.0
 
-@export_group("Mundo")
-@export var esta_no_chao: bool = false
+@export_group("Pickup")
+@export var pickup_radius: float = 26.0
 
-# --- Variaveis de Estado ---
-var municao_atual: int
+var player: ClassPlayer = null
 var pode_atirar: bool = true
-var is_active: bool = true
+var is_equipped: bool = false
+var pickup_area: Area2D = null
+var pickup_shape: CollisionShape2D = null
+var visual_root: Node2D = null
 
-func _ready():
-	municao_atual = tamanho_pente
+func _ready() -> void:
+	_ensure_runtime_nodes()
+	_refresh_visual()
+	_set_pickup_enabled(true)
 
-	if get_parent() is ClassPlayer:
-		player = get_parent()
-	elif get_owner() is ClassPlayer:
-		player = get_owner()
+func _physics_process(_delta: float) -> void:
+	if is_equipped:
+		if player == null or not is_instance_valid(player):
+			queue_free()
+			return
+		_update_held_transform()
+		if player.is_active and Input.is_action_pressed("ataque"):
+			tentar_atirar()
 
-func _physics_process(_delta):
-	if not is_active or player == null:
+func tentar_atirar() -> void:
+	if not is_equipped:
 		return
+	if player == null or not is_instance_valid(player):
+		return
+	if not pode_atirar:
+		return
+	disparar()
 
-	if Input.is_action_pressed("ataque"):
-		tentar_atirar()
-
-func tentar_atirar():
-	if pode_atirar and municao_atual > 0:
-		disparar()
-
-func drop():
-	is_active = false
-	esta_no_chao = true
-
-	var posicao_global_atual = global_position
-	var mapa = get_tree().current_scene
-	get_parent().remove_child(self)
-	mapa.add_child(self)
-	global_position = posicao_global_atual
-
-	var direcao_drop = Vector2(randf_range(-60, 60), randf_range(-30, -50))
-	var tween = create_tween()
-	tween.tween_property(self, "global_position", global_position + direcao_drop, 0.5).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-
-	print(nome_arma, " foi dropada!")
-
-func disparar():
+func disparar() -> void:
 	pode_atirar = false
-	municao_atual -= 1
+	var base_direction: Vector2 = player.get_weapon_aim_direction()
 
-	for i in range(quantidade_pellets):
-		var resultado = player.calculate_damage(dano_base, "atk")
-		var angulo_final = randf_range(-dispersao, dispersao)
-		var direcao = Vector2.RIGHT.rotated(global_rotation + angulo_final)
-		criar_projetil(direcao, resultado)
+	for _pellet in range(quantidade_pellets):
+		var resultado: Dictionary = player.calculate_damage(dano_base, "atk")
+		var final_direction: Vector2 = base_direction.rotated(randf_range(-dispersao, dispersao))
+		criar_projetil(final_direction, resultado)
 
 	await get_tree().create_timer(cadencia_tiro).timeout
 	pode_atirar = true
 
-func criar_projetil(direcao: Vector2, dados_dano: Dictionary):
-	print("Tiro disparado! Dano: ", dados_dano["value"], " Direcao: ", direcao)
+func criar_projetil(direcao: Vector2, dados_dano: Dictionary) -> void:
+	if PLAYER_PROJECTILE_SCENE == null:
+		return
+
+	var projectile = PLAYER_PROJECTILE_SCENE.instantiate()
+	projectile.global_position = global_position + direcao.normalized() * 12.0
+	projectile.setup(player, self, direcao, projectile_speed, dados_dano, projectile_lifetime, weapon_tint, projectile_scale)
+	get_tree().current_scene.add_child(projectile)
+
+func equip_to(new_player: ClassPlayer) -> void:
+	if new_player == null:
+		return
+	player = new_player
+	is_equipped = true
+	top_level = true
+	z_index = 40
+	_set_pickup_enabled(false)
+	_update_held_transform()
+
+func _update_held_transform() -> void:
+	var aim_direction: Vector2 = player.get_weapon_aim_direction()
+	var side: float = 1.0 if aim_direction.x >= 0.0 else -1.0
+	global_position = player.global_position + Vector2(hold_offset.x * side, hold_offset.y)
+	rotation = aim_direction.angle()
+	if visual_root != null:
+		visual_root.scale = Vector2(1.0, side)
+
+func _ensure_runtime_nodes() -> void:
+	visual_root = get_node_or_null("WeaponVisualRoot")
+	if visual_root == null:
+		visual_root = Node2D.new()
+		visual_root.name = "WeaponVisualRoot"
+		add_child(visual_root)
+
+	pickup_area = get_node_or_null("PickupArea")
+	if pickup_area == null:
+		pickup_area = Area2D.new()
+		pickup_area.name = "PickupArea"
+		pickup_area.monitoring = true
+		pickup_area.monitorable = true
+		pickup_area.collision_layer = 16
+		pickup_area.collision_mask = 2
+		add_child(pickup_area)
+		pickup_area.body_entered.connect(_on_pickup_body_entered)
+	elif not pickup_area.body_entered.is_connected(_on_pickup_body_entered):
+		pickup_area.body_entered.connect(_on_pickup_body_entered)
+
+	pickup_shape = pickup_area.get_node_or_null("CollisionShape2D")
+	if pickup_shape == null:
+		pickup_shape = CollisionShape2D.new()
+		pickup_shape.name = "CollisionShape2D"
+		pickup_area.add_child(pickup_shape)
+
+	var shape := CircleShape2D.new()
+	shape.radius = pickup_radius
+	pickup_shape.shape = shape
+
+func _refresh_visual() -> void:
+	for child in visual_root.get_children():
+		child.queue_free()
+
+	if weapon_prop_scene != null:
+		var prop = weapon_prop_scene.instantiate()
+		visual_root.add_child(prop)
+		return
+
+	var polygon := Polygon2D.new()
+	polygon.color = weapon_tint
+	polygon.polygon = PackedVector2Array([
+		Vector2(-weapon_size.x * 0.25, -weapon_size.y * 0.5),
+		Vector2(weapon_size.x * 0.75, -weapon_size.y * 0.5),
+		Vector2(weapon_size.x * 0.75, weapon_size.y * 0.5),
+		Vector2(-weapon_size.x * 0.25, weapon_size.y * 0.5),
+	])
+	visual_root.add_child(polygon)
+
+	var muzzle := Polygon2D.new()
+	muzzle.color = weapon_tint.lightened(0.15)
+	muzzle.position = Vector2(weapon_size.x * 0.65, 0)
+	muzzle.polygon = PackedVector2Array([
+		Vector2(0, -weapon_size.y * 0.35),
+		Vector2(weapon_size.x * 0.35, -weapon_size.y * 0.22),
+		Vector2(weapon_size.x * 0.35, weapon_size.y * 0.22),
+		Vector2(0, weapon_size.y * 0.35),
+	])
+	visual_root.add_child(muzzle)
+
+func _set_pickup_enabled(enabled: bool) -> void:
+	if pickup_area == null:
+		return
+	pickup_area.monitoring = enabled
+	pickup_area.monitorable = enabled
+	pickup_area.visible = false
+	if pickup_shape != null:
+		pickup_shape.disabled = not enabled
+
+func _on_pickup_body_entered(body: Node) -> void:
+	if is_equipped:
+		return
+	if body is ClassPlayer:
+		body.equip_weapon(self)

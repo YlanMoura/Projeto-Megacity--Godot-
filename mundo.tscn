@@ -6,13 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://dvjyh2gqqlyb5" path="res://characters/skye/skye.tscn" id="5_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://cmr2h733llaik" path="res://enemies/inimigo.tscn" id="7_2hh7m"]
 [ext_resource type="PackedScene" uid="uid://bixsvq0wfgqcm" path="res://effects/areaEffects/slime/slime_area.tscn" id="8_pij3u"]
+[ext_resource type="PackedScene" path="res://enemies/melee/MeleeEnemy.tscn" id="9_lwdvv"]
 [ext_resource type="PackedScene" uid="uid://cuvb1ymty6e1g" path="res://effects/areaEffects/frozen/frozen_area.tscn" id="9_pfhxm"]
 [ext_resource type="PackedScene" uid="uid://bkj6pr5rjm8mf" path="res://enemies/spawner/Spawner.tscn" id="10_pij3u"]
 [ext_resource type="PackedScene" uid="uid://cb327j63spjo8" path="res://characters/Balpo/balpo.tscn" id="11_0oi55"]
 [ext_resource type="PackedScene" uid="uid://cmt7l1coa5cnh" path="res://characters/Asta/Asta.tscn" id="12_0crsg"]
 [ext_resource type="PackedScene" uid="uid://bt3d2wke6f44q" path="res://characters/Layla/Layla.tscn" id="12_57gmc"]
 [ext_resource type="PackedScene" uid="uid://bti5j0rw8cja4" path="res://ui/HUD/HUD.tscn" id="13_0crsg"]
-[ext_resource type="PackedScene" path="res://characters/Vixy/Vixy.tscn" id="14_vixy"]
+[ext_resource type="PackedScene" uid="uid://c3ivch2rsxdp1" path="res://characters/Vixy/Vixy.tscn" id="14_vixy"]
+[ext_resource type="PackedScene" path="res://enemies/ranged/RangedEnemy.tscn" id="15_qobow"]
+[ext_resource type="PackedScene" path="res://weapons/prototypes/pistol/PrototypeDeagle.tscn" id="16_8wx08"]
+[ext_resource type="PackedScene" path="res://weapons/prototypes/shotgun/PrototypeShotgun.tscn" id="17_j2eq6"]
+[ext_resource type="PackedScene" path="res://weapons/prototypes/smg/PrototypeSMG.tscn" id="18_0hui5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lgngo"]
 texture = ExtResource("1_lgngo")
@@ -392,7 +397,7 @@ dash_speed = 1200.0
 
 [node name="Spawner" parent="." unique_id=886131761 instance=ExtResource("10_pij3u")]
 position = Vector2(826, 234)
-enemy_scene = ExtResource("7_2hh7m")
+enemy_scene = ExtResource("9_lwdvv")
 
 [node name="inimigo3" parent="." unique_id=1117540915 instance=ExtResource("7_2hh7m")]
 position = Vector2(552, 451)
@@ -404,18 +409,29 @@ skill_1_cooldown = 0.5
 [node name="Layla" parent="." unique_id=684857658 instance=ExtResource("12_57gmc")]
 position = Vector2(-330, 191)
 
-[node name="Vixy" parent="." instance=ExtResource("14_vixy")]
+[node name="Vixy" parent="." unique_id=1700544487 instance=ExtResource("14_vixy")]
 position = Vector2(-180, -220)
 
 [node name="Hud" parent="." unique_id=1383066268 instance=ExtResource("13_0crsg")]
 
 [node name="Asta" parent="." unique_id=58266105 instance=ExtResource("12_0crsg")]
 position = Vector2(120, 146)
-max_health = 60
 max_shield = 120
 speed = 420.0
-dash_speed = 1250.0
-dash_duration = 0.5
-max_dashes = 2
 
+[node name="Spawner2" parent="." unique_id=1869842649 instance=ExtResource("10_pij3u")]
+position = Vector2(1837, -204)
+enemy_scene = ExtResource("9_lwdvv")
 
+[node name="Spawner3" parent="." unique_id=1691552564 instance=ExtResource("10_pij3u")]
+position = Vector2(1184, 345)
+enemy_scene = ExtResource("15_qobow")
+
+[node name="PrototypeDeagle" parent="." unique_id=793868551 instance=ExtResource("16_8wx08")]
+position = Vector2(-751, -410)
+
+[node name="PrototypeShotgun" parent="." unique_id=1992420789 instance=ExtResource("17_j2eq6")]
+position = Vector2(-639, -412)
+
+[node name="PrototypeSMG" parent="." unique_id=1854037990 instance=ExtResource("18_0hui5")]
+position = Vector2(-543, -414)
