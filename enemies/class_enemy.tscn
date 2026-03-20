@@ -1,4 +1,4 @@
 [gd_scene format=3 uid="uid://d2ublvm3px44w"]
 
-[node name="ClassEnemy" type="CharacterBody2D"]
-collision_mask = 4
+[node name="ClassEnemy" type="CharacterBody2D" unique_id=1137777614]
+collision_mask = 9

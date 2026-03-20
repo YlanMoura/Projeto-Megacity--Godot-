@@ -1,4 +1,5 @@
-class_name ClassPlayer extends CharacterBody2D
+extends CharacterBody2D
+class_name ClassPlayer
 
 # --- STATUS GERAIS ---
 @export_group("Identidade")
@@ -50,6 +51,10 @@ var is_dashing: bool = false
 @export var skill_1_cooldown: float = 3.0
 var can_use_skill_1: bool = true
 
+@export_group("Weapon")
+@export var starting_weapon_scene: PackedScene
+var current_weapon = null
+
 # --- SISTEMA INTERNO ---
 var stats = {}
 var buff_timers = {}
@@ -63,9 +68,12 @@ func _ready():
 	current_shield = max_shield 
 	current_dashes = max_dashes
 	
+	set_collision_layer_value(1, false)
+	set_collision_layer_value(2, true)
 	set_collision_mask_value(1, true)
+	set_collision_mask_value(2, false)
+	set_collision_mask_value(3, false)
 	set_collision_mask_value(4, true)
-	set_collision_mask_value(3, true)
 	
 	# --- CONEXÃO COM HUD ---
 	# Procura o HUD na cena principal (assumindo que o nome do nó é "Hud" ou "HUD")
@@ -94,6 +102,9 @@ func _ready():
 	# Se já nascer ativo, conecta
 	if is_active:
 		set_active(true)
+
+	if starting_weapon_scene != null:
+		equip_weapon_scene(starting_weapon_scene)
 
 # --- MOVIMENTAÇÃO CENTRALIZADA (A Mágica Acontece Aqui) ---
 func _physics_process(delta: float) -> void:
@@ -283,6 +294,36 @@ func attempt_skill_1():
 	can_use_skill_1 = true
 
 func execute_skill_1_logic(): pass
+
+func get_weapon_aim_direction() -> Vector2:
+	var direction := get_global_mouse_position() - global_position
+	if direction.length_squared() <= 0.001:
+		return Vector2.RIGHT
+	return direction.normalized()
+
+func equip_weapon_scene(scene: PackedScene) -> void:
+	if scene == null:
+		return
+	var weapon = scene.instantiate()
+	var world = get_tree().current_scene
+	if world != null:
+		world.add_child(weapon)
+	else:
+		add_child(weapon)
+	equip_weapon(weapon)
+
+func equip_weapon(new_weapon) -> void:
+	if new_weapon == null:
+		return
+	if current_weapon != null and is_instance_valid(current_weapon) and current_weapon != new_weapon:
+		current_weapon.queue_free()
+	current_weapon = new_weapon
+	if current_weapon.has_method("equip_to"):
+		current_weapon.equip_to(self)
+
+func on_weapon_hit_enemy(_target_enemy, _damage_result: Dictionary, _source_weapon = null) -> void:
+	pass
+
 func die(): 
 	print("Morreu!")
 	get_tree().reload_current_scene()

@@ -7,9 +7,10 @@ size = Vector2(40, 40)
 
 [node name="Enemy" type="CharacterBody2D" unique_id=84812128 groups=["enemies"]]
 collision_layer = 4
-collision_mask = 15
+collision_mask = 9
 script = ExtResource("1_030df")
 max_health = 300
+wall_probe_distance = 60.0
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2142006097]
 offset_left = -19.0

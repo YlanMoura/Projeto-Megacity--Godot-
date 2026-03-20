@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://weapons/ClassWeapon.gd" id="1"]
+
+[node name="PrototypeDeagle" type="Node2D"]
+script = ExtResource("1")
+nome_arma = "Prototype Deagle"
+hold_offset = Vector2(26, -8)
+weapon_tint = Color(0.95, 0.82, 0.42, 1)
+weapon_size = Vector2(30, 9)
+dano_base = 28.0
+cadencia_tiro = 0.42
+quantidade_pellets = 1
+dispersao = 0.018
+projectile_speed = 1200.0
+projectile_lifetime = 1.1
+projectile_scale = 1.15
+pickup_radius = 28.0
